@@ -89,4 +89,30 @@
             </div>
         </div>
     </div>
+    <div class="container" style="margin-left: 15%">
+        <div class="mt-5">
+            <h3 class="text-center">SIMILAR PRODUCTS</h3>
+            <hr>
+            <div class="card-body">
+                <div class="row">
+                    @forelse ($similars as $product)
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <ul>
+                                        <li><img src="{{ Storage::url($product->image) }}" width="70" height="70">
+                                        </li>
+                                        <li>{{ $product->name }}</li>
+                                        <li>{{ $product->price }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <h5 class="text-center">No similar products</h5>
+                    @endforelse
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

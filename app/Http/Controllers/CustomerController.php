@@ -114,7 +114,18 @@ class CustomerController extends Controller
         // Add debugging statement
         $order = Order::findOrFail($id);
 
-        return view('customer.purchase_confirmation', compact('order'));
+        $keywords = explode(' ', $order->product->name);
+
+        $similars = Product::where(function ($query) use ($keywords, $order) {
+            $query->where('id', '!=', $order->id);
+
+            foreach($keywords as $keyword) {
+                $query->orWhere('name', 'like', '%' . $keyword . '%');
+            }
+        })
+        ->get();
+
+        return view('customer.purchase_confirmation', compact('order', 'similars'));
     }
     public function purchaseDelete($id)
     {
