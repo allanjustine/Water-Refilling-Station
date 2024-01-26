@@ -1,0 +1,12 @@
+.glow {
+    animation: glow-animation 1s infinite alternate;
+}
+
+@keyframes glow-animation {
+    from {
+        text-shadow: 0 0 10px #00f, 0 0 20px #00f, 0 0 30px #00f;
+    }
+    to {
+        text-shadow: 0 0 20px #00f, 0 0 30px #00f, 0 0 40px #00f;
+    }
+}

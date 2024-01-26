@@ -1,0 +1,24 @@
+php artisan migrate:reset
+
+====for reseting database======
+
+php artisan migrate
+
+===========migration=========
+
+php artisan config:cache
+php artisan migrate
+php artisan migrate:refresh
+
+php artisan migrate:rollback
+
+php artisan storage:link
+
+
+composer dump-autoload
+php artisan optimize:clear
+
+
+php artisan cache:clear
+php artisan config:clear
+php artisan view:clear
