@@ -20,4 +20,9 @@ class UserProfileController extends Controller
         return view('subscribers.profile');
     }
 
+    public function closed()
+    {
+        return view('closed');
+    }
+
 }

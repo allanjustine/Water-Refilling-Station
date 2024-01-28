@@ -112,7 +112,7 @@ class HomeController extends Controller
                 Storage::disk('public')->delete($user->avatar);
             }
 
-            $imagePath = $request->file('avatar')->store('images/pictures', 'public');
+            $imagePath = $request->file('avatar')->store('users-avatar/users-avatar', 'public');
         } else {
             $imagePath = $user->avatar;
         }

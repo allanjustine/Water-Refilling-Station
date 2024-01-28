@@ -16,6 +16,8 @@ use App\Http\Controllers\OrderStatusController;
 
 
 //////////////////////////////////////////////////////////////////////////
+Route::get('/closed', [UserProfileController::class, 'closed']);
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -103,8 +105,6 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 Route::middleware(['auth', 'user-access:WRF'])->group(function () {
     Route::get('/subscribers/home', [HomeController::class, 'subscribersHome'])->name('subscribers.home');
 
-    Route::get('/subscriber/settings/{id}', [HomeController::class, 'mySettings']);
-    Route::put('/subscriber/settings/update/{id}', [HomeController::class, 'updateSettings'])->name('update.settings');
 
     // Customer Profile
     route::get('/subscribers/profile', [UserProfileController::class, 'SubuserProfile'])->name('subscribers.profile');
@@ -147,8 +147,11 @@ Route::middleware(['auth', 'user-access:WRF'])->group(function () {
 
 });
 
+Route::middleware('auth')->group(function () {
 
-
+    Route::get('/settings/{id}', [HomeController::class, 'mySettings']);
+    Route::put('/settings/update/{id}', [HomeController::class, 'updateSettings'])->name('update.settings');
+});
 
     use App\Http\Controllers\SubscriptionController;
 

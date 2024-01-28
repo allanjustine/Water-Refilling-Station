@@ -1,6 +1,4 @@
-@extends('layouts.subscribers.SubsApp')
-
-@include('layouts.subscribers.Subsidebar')
+@extends('layouts.app')
 @section('content')
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -13,7 +11,7 @@
                 @endif
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="text-center">Subscriber Settings</h2>
+                        <h2 class="text-center">My Settings</h2>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('update.settings', $user->id) }}" method="POST"
@@ -32,8 +30,7 @@
                                 </div>
                                 <div class="d-flex justify-content-center">
                                     <div class="btn text-white bg-primary">
-                                        <label for="avatar" class="form-label m-1" style="cursor: pointer;">Update your
-                                            station logo</label>
+                                        <label for="avatar" class="form-label m-1" style="cursor: pointer;">Update Profile</label>
                                         <input id="avatar" type="file"
                                             class="form-control d-none pr-4 @error('avatar') is-invalid @enderror"
                                             name="avatar" value="{{ old('avatar') }}" accept="image/*"
@@ -47,11 +44,16 @@
                                 </div>
 
                                 <!-- Change Name -->
+                                @if (auth()->user()->type == 'WRF')
                                 <div class="mb-3">
                                     <label for="station" class="form-label">Station</label>
                                     <input type="text" class="form-control" id="station" name="station"
                                         value="{{ auth()->user()->station }}">
                                 </div>
+                                @else
+                                <input type="text" class="form-control" id="station" name="station"
+                                        value="{{ auth()->user()->station ? auth()->user()->station : null }}" hidden>
+                                @endif
 
                                 <button type="submit" class="btn btn-primary">Save Changes</button>
                         </form>

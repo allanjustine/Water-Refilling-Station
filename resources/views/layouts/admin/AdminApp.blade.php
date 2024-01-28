@@ -189,7 +189,7 @@
                                     </a>
 
                                     <!---- PROFILE --->
-                                    <a href="{{ route('admin.profile') }}" class="dropdown-item">
+                                    <a href="/settings/{{auth()->id()}}" class="dropdown-item">
                                         <b>My Profile</b>
                                     </a>
 

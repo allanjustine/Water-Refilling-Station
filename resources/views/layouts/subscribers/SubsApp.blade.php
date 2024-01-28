@@ -158,7 +158,7 @@
                                         <b>Home</b>
                                     </a>
 
-                                    <a href="/subscriber/settings/{{ auth()->id() }}" class="dropdown-item">
+                                    <a href="/settings/{{ auth()->id() }}" class="dropdown-item">
                                         <b>Settings</b>
                                     </a>
 

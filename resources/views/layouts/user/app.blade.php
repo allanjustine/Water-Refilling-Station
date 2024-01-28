@@ -159,7 +159,7 @@
                                     </a>
 
 
-                                    <a class="dropdown-item" href="{{ route('customer.profile') }}" ">
+                                    <a class="dropdown-item" href="/settings/{{ auth()->id() }}">
                                             <b>{{ __('My Profile') }}</b>
                                         </a>
 
