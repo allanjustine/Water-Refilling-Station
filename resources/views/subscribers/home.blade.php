@@ -186,4 +186,37 @@
             </div>
         </div>
     </div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">Daily Reports</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Customer Name</th>
+                                    <th>Item ordered</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @forelse($dailyReports as $report)
+                                        <td>{{ $report->user->name }}</td>
+                                        <td>{{ $report->product->name }}</td>
+                                        <td class="text-success"><strong>{{ $report->status }}</strong></td>
+                                    @empty
+                                        <td colspan="3" class="text-center">No daily reports yet</td>
+                                    @endforelse
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

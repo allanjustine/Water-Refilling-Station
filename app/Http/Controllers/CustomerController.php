@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\GcashDetail;
 use App\Models\User;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
@@ -32,12 +33,17 @@ class CustomerController extends Controller
     public function addToCart(Request $request, $productId)
     {
 
-        $request->validate([
-            'quantity' => 'required|integer|min:1|max:50',
-        ]);
 
+        // Calculate the total quantity to add
+        $quantityAdd = ($request->borrow ?? 0) + ($request->buy ?? 0);
+
+        // Ensure the total quantity is at least 1
+        if ($quantityAdd < 1) {
+            return back()->with('error', 'The total quantity must be at least 1 or more. Please input 1 in any Borrow, Buy or Own Jugs.');
+        }
+
+        // Find the product
         $product = Product::findOrFail($productId);
-        $quantityAdd = $request->quantity;
 
         // Check if the product is already in the cart
         $existingCartItem = Cart::where('user_id', auth()->id())
@@ -45,13 +51,20 @@ class CustomerController extends Controller
             ->first();
 
         if ($existingCartItem) {
-            // Increment quantity if the product is already in the cart
-            $existingCartItem->increment('quantity');
+            // Increment the quantity if the product is already in the cart
+            $existingCartItem->quantity += $quantityAdd;
+            $existingCartItem->borrow += $request->borrow;
+            $existingCartItem->buy += $request->buy;
+            $existingCartItem->own += $request->own;
+            $existingCartItem->save();
         } else {
             // Add a new item to the cart with the product_id
             Cart::create([
                 'user_id' => auth()->id(),
                 'product_id' => $productId,
+                'borrow' => $request->borrow,
+                'buy' => $request->buy,
+                'own' => $request->own,
                 'quantity' => $quantityAdd,
             ]);
         }
@@ -68,7 +81,9 @@ class CustomerController extends Controller
         // Extract the attributes of the order
         $latestOrderAttributes = optional($latestOrder)->toArray();
 
-        return view('customer.cart', compact('cartItems', 'latestOrderAttributes'));
+        $gcashDetails = GcashDetail::all();
+
+        return view('customer.cart', compact('cartItems', 'latestOrderAttributes', 'gcashDetails'));
     }
 
 
@@ -92,17 +107,33 @@ class CustomerController extends Controller
 
         // Create a new order with a pending status
 
+        $request->validate([
+            'payment_method' => ['required']
+        ]);
+
+        if ($request->payment_method == 'Gcash') {
+            $request->validate([
+                'reference_number' => ['required']
+            ]);
+        }
+
         $order = new Order();
         $order->user_id = auth()->user()->id; // Assuming you have a user_id in your orders table
         $order->product_id = $request->input('product_id');
         $order->payment_method = $request->input('payment_method');
         $order->order_quantity = $request->input('order_quantity'); // Add this line to capture the product_id
+        $order->borrow = $request->input('borrow'); // Add this line to capture the product_id
+        $order->buy = $request->input('buy'); // Add this line to capture the product_id
+        $order->own = $request->input('own'); // Add this line to capture the product_id
         $order->status = 'pending'; // Add this line to set the status to pending
+        $order->reference_number = $request->input('reference_number');
         $order->save();
 
         // If the order doesn't require admin approval, clear the user's cart
 
-        Cart::where('user_id', auth()->user()->id)->delete();
+        $cart = Cart::where('user_id', auth()->user()->id)->where('product_id', $request->product_id);
+
+        $cart->delete();
 
         // Redirect to the confirmation page with the order ID
         return redirect('/customer/my-orders')->with('order', 'Ordered successfully');
@@ -119,11 +150,11 @@ class CustomerController extends Controller
         $similars = Product::where(function ($query) use ($keywords, $order) {
             $query->where('id', '!=', $order->id);
 
-            foreach($keywords as $keyword) {
+            foreach ($keywords as $keyword) {
                 $query->orWhere('name', 'like', '%' . $keyword . '%');
             }
         })
-        ->get();
+            ->get();
 
         return view('customer.purchase_confirmation', compact('order', 'similars'));
     }
@@ -132,8 +163,7 @@ class CustomerController extends Controller
         // Add debugging statement
         $order = Order::findOrFail($id);
 
-        if(!$order)
-        {
+        if (!$order) {
             return back()->with('error', 'No order founded');
         } else {
             $order->delete();
@@ -149,6 +179,20 @@ class CustomerController extends Controller
         return view('customer.my-orders', compact('orders'));
     }
 
+    public function repurchase($id)
+    {
+        $repurchase = Order::find($id);
+
+        if (!$repurchase) {
+            return back()->with('orderError', 'Order not found.');
+        } else {
+            $repurchase->update([
+                'status' => 'Pending',
+                'reason' => null
+            ]);
+            return redirect('/customer/my-orders')->with('order', 'You successfully repurchase the product');
+        }
+    }
 
 
 
@@ -184,9 +228,4 @@ class CustomerController extends Controller
 
         return redirect('/customer/purchase-confirmation/' . $order->id)->with('message', 'Water Acknowledged successfully');
     }
-
-
-
-
-
 }

@@ -22,7 +22,13 @@
                                 </tr>
 
                                 <tr>
-                                    <td>{{ Auth::user()->avatar }}</td>
+                                    <td>
+                                        @if(auth()->user()->avatar == null)
+                                        <img class="img-fluid h-50 w-50" src="https://p7.hiclipart.com/preview/9/763/803/computer-icons-login-user-system-administrator-image-admin-thumbnail.jpg" alt="">
+                                        @else
+                                        <img class="img-fluid h-50 w-50" src="{{ Storage::url(Auth::user()->avatar) }}" alt="">
+                                        @endif
+                                    </td>
                                     <td>{{ Auth::user()->name }}</td>
                                     <td>{{ Auth::user()->email }}</td>
                                     <td>{{ Auth::user()->type }}</td>

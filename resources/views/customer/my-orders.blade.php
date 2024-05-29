@@ -35,7 +35,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <h3>My Orders</h3>
+                        <h3 class="text-center">My Orders</h3>
 
 
                     </div>
@@ -48,8 +48,11 @@
                                 {{ session('order') }}
                             </div>
                         @endif
-
-                        <h2>Your Shopping Cart</h2>
+                        @if (session('orderError'))
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                {{ session('orderError') }}
+                            </div>
+                        @endif
 
                         @if (count($orders) > 0)
                             <ul>
@@ -69,10 +72,30 @@
                                         @endif
                                         Created by: {{ $order->product->user->name }}
                                         <br>
-                                        {{ $order->product->name }} - Quantity: {{ $order->order_quantity }} -
-                                        ₱{{ $order->order_quantity * $order->product->price }}
+                                        {{ $order->product->name }} - Quantity: {{ $order->order_quantity }} - Own: {{ $order->own }} -
+                                        ₱{{ number_format(($order->order_quantity + $order->own) * $order->product->price, 2) }}
 
                                         <br><br>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group mb-2">
+                                                    <label for="borrow">Borrowed Jugs</label>
+                                                    <input type="number" readonly class="form-control" name="borrow" value="{{ $order->borrow }}">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group mb-2">
+                                                    <label for="own">Owned Jugs</label>
+                                                    <input type="number" readonly class="form-control" name="own" value="{{ $order->own }}">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group mb-2">
+                                                    <label for="buy">Bought Jugs</label>
+                                                    <input type="number" readonly class="form-control" name="buy" value="{{ $order->buy }}">
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         @if ($order->status === 'For Delivery')
                                             <p class="text-info"><strong>Order is for delivery</strong></p>
@@ -82,6 +105,9 @@
                                             <p class="text-danger"><strong>Pending</strong></p>
                                         @elseif($order->status === 'On Process')
                                             <p class="text-success"><strong>Processing order...</strong></p>
+                                        @elseif($order->status === 'Cancelled')
+                                        <p class="text-danger"><strong>Your order was cancelled...</strong></p>
+                                        <p class="text-danger"><strong>Reason of cancellation:</strong> {{ $order->reason }}</p>
                                         @else
                                             <p class="text-success"><strong>Paid</strong></p>
                                         @endif
@@ -107,7 +133,7 @@
                                 @endforeach
                             </ul>
                         @else
-                            <p>Your cart is empty.</p>
+                            <p class="text-center">Your cart is empty.</p>
                         @endif
                     </div>
                 </div>

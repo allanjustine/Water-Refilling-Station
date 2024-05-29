@@ -1,196 +1,158 @@
-@extends('layouts.user.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Refilling Philippines | Register</title>
+    <link rel="shortcut icon" href="/images/front-logo.png" type="image/x-icon">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('/images/bg.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
 
-@section('content')
-    <html>
+        .card {
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+        }
 
-    <head>
-        <style>
-            .auth-card-container {
-                max-width: 400px;
-                margin: auto;
-                background-color: #fff;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                padding: 20px;
-                margin-top: 20px;
-                background-image: url('{{ asset('../images/aw.png') }}');
-                background-size: cover;
-            }
+        .content {
+            background: rgba(0, 0, 0, 0.6);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
-            .card-header {
-                background-color: transparent;
-                /* Set the background color of the card header to transparent */
-                border: none;
-                /* Remove the border of the card header */
-            }
-
-            body {
-                background-image: url('{{ asset('../images/light.png') }}');
-                background-repeat: no-repeat;
-                background-attachment: fixed;
-                background-size: 100% 100%;
-            }
-        </style>
-    </head>
-
-    <body>
-
-
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card auth-card-container">
-                        <br>
-                        <div class="card-header" style="color: black;"><b>{{ __('CREATE ACCOUNT TO SUBSCRIBERS') }}</b></div>
-                        <br>
+            <a class="navbar-brand" href="/">
+                <h2 style="font-family: cursive, sans-serif; color:rgb(68, 194, 243);"><strong>Water Refilling Station</strong></h2>
+            </a>
+            <div class="justify-content-end">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn bg-primary p-2 text-white" href="/login">Sign In</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="background-image d-flex justify-content-center align-items-center">
+        <div class="content">
+            <div class="container d-flex justify-content-center" style="margin-top: 8%;">
+                <div class="card text-white p-4" style="width: 100%; max-width: 400px;">
+                    <div class="text-center">
+                        <h3><strong>Register</strong></h3>
 
-                        <div class="card-body">
-                            <form method="POST" action="{{ route('register1') }}">
-                                @csrf
-
-                                <div class="row mb-3">
-                                    <label for="name" class="col-md-4 col-form-label text-md-end"
-                                        style="color: black;"><b>{{ __('NAME') }}</b></label>
-
-                                    <div class="col-md-6">
-                                        <input id="name" type="text"
-                                            class="form-control @error('name') is-invalid @enderror" name="name"
-                                            value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                        @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label for="email" class="col-md-4 col-form-label text-md-end"
-                                        style="color: black;"><b>{{ __('EMAIL') }}</b></label>
-
-                                    <div class="col-md-6">
-                                        <input id="email" type="email"
-                                            class="form-control @error('email') is-invalid @enderror" name="email"
-                                            value="{{ old('email') }}" required autocomplete="email">
-
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label for="phone" class="col-md-4 col-form-label text-md-end"
-                                        style="color: black;"><b>{{ __('PHONE NUMBER') }}</b></label>
-
-                                    <div class="col-md-6">
-                                        <input id="phone" type="number"
-                                            class="form-control @error('phone') is-invalid @enderror" name="phone"
-                                            value="{{ old('phone') }}" required autocomplete="phone">
-
-                                        @error('phone')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="municipality" class="col-md-4 col-form-label text-md-end"
-                                        style="color: black;"><b>{{ __('MUNICIPALITY') }}</b></label>
-
-                                    <div class="col-md-6">
-                                        <select name="municipality" id="municipality"
-                                            class="form-select @error('municipality') is-invalid @enderror">
-                                            <option selected hidden>Select your Municipality
-                                            </option>
-                                            <option disabled>Select your Municipality</option>
-                                            <optgroup label="MUNICIPALITY">
-                                                <option value="Abuyog">Abuyog</option>
-                                                <option value="Javier">Javier</option>
-                                                <option value="Macarthur">Macarthur</option>
-                                                <option value="Mahaplag">Mahaplag</option>
-                                            </optgroup>
-                                        </select>
-
-                                        @error('municipality')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="station" class="col-md-4 col-form-label text-md-end"
-                                        style="color: black;"><b>{{ __('STATION') }}</b></label>
-
-                                    <div class="col-md-6">
-                                        <input type="text" name="station"
-                                        class="form-control @error('station') is-invalid @enderror" required>
-                                    </div>
-
-                                    @error('station')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                        </div>
-
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end"
-                                style="color: black;"><b>{{ __('PASSWORD') }}</b></label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password"
-                                    class="form-control @error('password') is-invalid @enderror" name="password" required
-                                    autocomplete="new-password">
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                        <h5>Subscribing {{ $subscription_type }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('register1') }}">
+                            @csrf
+                            <input type="text" hidden value="{{ $subscription_type }}" name="subscription_type">
+                            @csrf
+                            <div class="form-group">
+                                <label for="name"><strong>Name</strong></label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                                @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
-                        </div>
-
-                        <!-- Add this to your registration form -->
-                        <div class="row mb-3">
-                            <label for="subscription_type" class="col-md-4 col-form-label text-md-end"
-                                style="color: black;"><b>{{ __('Subscription Type') }}</b></label>
-
-                            <div class="col-md-6">
-                                <select id="subscription_type" class="form-select" name="subscription_type" required>
-                                    <option value="1_month">1 Month</option>
-                                    <option value="1_year">1 Year</option>
+                            <div class="form-group">
+                                <label for="email"><strong>Email address</strong></label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="phone"><strong>Phone number (9XXXXXXXXX)</strong></label>
+                                <input type="number" class="form-control" id="phone" placeholder="(9XXXXXXXXX)" name="phone" required>
+                                @error('phone')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="municipality"><strong>Municipality</strong></label>
+                                <select name="municipality" id="municipality" class="form-control @error('municipality') is-invalid @enderror">
+                                    <option selected hidden>Select your Municipality
+                                    </option>
+                                    <option disabled>Select your Municipality</option>
+                                    <optgroup label="MUNICIPALITY">
+                                        <option value="Abuyog">Abuyog</option>
+                                        <option value="Javier">Javier</option>
+                                        <option value="Macarthur">Macarthur</option>
+                                        <option value="Mahaplag">Mahaplag</option>
+                                    </optgroup>
                                 </select>
-
-                                @error('subscription_type')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                @error('municipality')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
+                            <div class="form-group">
+                                <label for="station"><strong>Station</strong></label>
+                                <input type="text" class="form-control" id="station" name="station" required>
+                                @error('station')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
-                        </div>
-                        <br><br><br><br><br><br>
+                            <div class="form-group">
+                                <label for="address"><strong>Address</strong></label>
+                                <input type="text" class="form-control" id="address" name="address" required>
+                                @error('address')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="password"><strong>Password</strong></label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                                @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="password_confirmation"><strong>Confirm password</strong></label>
+                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                                @error('password_confirmation')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
-    </body>
 
-    </html>
-@endsection
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

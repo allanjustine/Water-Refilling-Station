@@ -37,6 +37,8 @@
     <div class="container">
         <h1>Store Closed</h1>
         <p>Please come back tomorrow. We apologize for any inconvenience.</p>
+        <p>Opening Time <strong><i>(8:00AM to 6:00PM)</i></strong></p>
+        <a href="/login" class="btn btn-primary mt-5">Back to login</a>
         <!-- You can add additional content or styling as needed -->
     </div>
 

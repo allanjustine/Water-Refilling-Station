@@ -68,7 +68,8 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'phone' => $data['phone'],
+            'phone' => "+63" . $data['phone'],
+            'municipality' => $data['municipality'],
             'address' => $data['address'],
             'password' => Hash::make($data['password']),
             'status' => 'pending',
@@ -88,9 +89,10 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'phone' => $request->phone,
+            'phone' => "+63" . $request->phone,
             'municipality' => $request->municipality,
             'station' => $request->station,
+            'address' => $request->address,
             'password' => bcrypt($request->password),
             'subscription_type' => $request->subscription_type,
             'type' =>   3
@@ -101,8 +103,14 @@ class RegisterController extends Controller
     }
 
 
-    public function showRegistrationForm1()
+    public function showRegistrationForm1($subscription_type)
     {
-        return view('auth.register1');
+        $valid_types = ['1_month', '1_year'];
+
+        if (!in_array($subscription_type, $valid_types)) {
+            abort(404);
+        }
+
+        return view('auth.register1', compact('subscription_type'));
     }
 }

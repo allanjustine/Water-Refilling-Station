@@ -13,8 +13,10 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
+        "laravel/vonage-notification-channel": "^3.3",
         "munafio/chatify": "^1.6",
-        "twilio/sdk": "^7.13"
+        "twilio/sdk": "^7.13",
+        "vonage/client": "^4.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

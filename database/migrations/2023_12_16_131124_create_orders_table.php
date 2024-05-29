@@ -15,10 +15,14 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('product_id')->constrained();
             $table->integer('order_quantity')->default(1); // Add the quantity column
-            $table->enum('status', ['Pending', 'On Process', 'For Delivery', 'Delivered', 'Paid'])->default('Pending');
+            $table->enum('status', ['Pending', 'On Process', 'For Delivery', 'Delivered', 'Paid', 'Cancelled'])->default('Pending');
             $table->string('image')->nullable();
-            $table->string('jug_status')->nullable();
+            $table->string('borrow')->nullable();
+            $table->string('own')->nullable();
+            $table->string('buy')->nullable();
             $table->string('payment_method')->nullable();
+            $table->string('reference_number')->nullable();
+            $table->string('reason')->nullable();
             $table->timestamps();
             $table->string('product_status')->default('Approve');
         });

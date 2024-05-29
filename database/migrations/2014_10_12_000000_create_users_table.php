@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('bio')->nullable();
             $table->decimal('billings', 10, 2)->nullable()->default(0);
             $table->timestamps();
-            $table->enum('subscription_type', ['1_month', '1_year'])->default('1_month');
+            $table->enum('subscription_type', ['infinite', '1_month', '1_year'])->default('1_month');
 
         });
     }

@@ -13,6 +13,8 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/images/aw.png" type="image/x-icon">
 
     <style>
         /*----------- BN5 ------------ */
@@ -100,13 +102,9 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm sticky-top">
             <div class="container">
-                @auth
-                    <img @if (auth()->user()->avatar == null) src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
-               @else
-               src="{{ Storage::url(auth()->user()->avatar) }}" @endif
+                    <img src="/images/aw.png"
                         style="width: 60px; height: 60px; object-fit: cover; border-radius: 50%; margin-right: 5px;"
                         alt="logo">
-                @endauth
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <b>Water Refilling Station</b>
                 </a>
@@ -157,8 +155,7 @@
                                     <a href="" class="dropdown-item">
                                         <b>Home</b>
                                     </a>
-
-
+                                    <a class="dropdown-item" href="/customer/settings/{{auth()->user()->id}}">
                                     <a class="dropdown-item" href="/settings/{{ auth()->id() }}">
                                             <b>{{ __('My Profile') }}</b>
                                         </a>

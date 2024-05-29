@@ -13,15 +13,13 @@ use App\Models\Cart;
 use Twilio\Rest\Client;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\OrderController;
-
-
-
+use App\Notifications\SmsNotification;
 
 class AdminController extends Controller
 {
     public function manageProducts()
     {
-        $products = Product::all();
+        $products = Product::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
 
         return view('subscribers.manage_products', compact('products'));
     }
@@ -213,7 +211,6 @@ class AdminController extends Controller
     public function approveOrder($orderId)
     {
         $order = Order::find($orderId);
-
         if ($order->product) {
             if ($order->product->product_quantity == 0) {
 
@@ -235,12 +232,11 @@ class AdminController extends Controller
 
         $order->save();
 
-        // Redirect to the corresponding status page
-        return redirect('/subscribers/orders')->with('approve', 'Order approved successfully with product ID ' . $order->product->id);
+        return redirect('/subscribers/orders')->with('approve', 'Order approved successfully.');
     }
 
 
-    public function verifyOrder(Request $request, Product $product, $id)
+    public function verifyOrder(Request $request, $id)
     {
         $order = Order::find($id);
 
@@ -249,20 +245,65 @@ class AdminController extends Controller
         } else {
             $order->update([
                 'status'        =>      $request->status,
-                'jug_status'        =>      $request->jug_status,
                 'created_at'        =>      now()
             ]);
+
+            if ($request->status == 'For Delivery') {
+
+                $basic  = new \Vonage\Client\Credentials\Basic("5c3c9212", "jrFiiXK46ynfBu3n");
+                $client = new \Vonage\Client($basic);
+
+                if ($request->payment_method == 'Cash on Delivery') {
+                    $client->sms()->send(
+                        new \Vonage\SMS\Message\SMS($order->user->phone, 'BRAND_NAME', 'Reminders! Hello Mr/Mrs. ' . $order->user->name . ' your order is out for delivery. We will deliver your orders at ' . $order->user->address . ', ' . $order->user->municipality . ' Please prepare an exact amount P' . ($order->order_quantity + $order->own) * $order->product->price . ' for your orders Cash on Delivery. Thank You!')
+                    );
+                } else {
+                    $client->sms()->send(
+                        new \Vonage\SMS\Message\SMS($order->user->phone, 'BRAND_NAME', 'Reminders! Hello Mr/Mrs. ' . $order->user->name . ' your order is out for delivery. We will deliver your orders at ' . $order->user->address . ', ' . $order->user->municipality . ' and Thank you for using gcash as payment method. Your reference # ' . $order->reference_number . '. Thank you for your orders!')
+                    );
+                }
+            }
 
             $order->created_at = now();
 
             $order->save();
         }
 
-        if ($request->jug_status == 'Return') {
-            $product->increment('product_quantity', $request->order_quantity);
-        }
+        return back()->with('approve', 'Order updated successfully as ' . $order->status);
+    }
 
-        return redirect('/subscribers/orders')->with('approve', 'Order verified successfully as ' . $order->status . ' Jug Status ' . $order->jug_status);
+    public function cancelOrder(Request $request, $id)
+    {
+        $cancelling = Order::find($id);
+
+        if (!$cancelling) {
+            return back()->with('error', 'No orders found.');
+        } else {
+            $request->validate([
+                'reason' => ['required']
+            ]);
+            $cancelling->update([
+                'status' => 'Cancelled',
+                'reason' => $request->reason
+            ]);
+
+            return back()->with('approve', 'Order successfully cancelled.');
+        }
+    }
+
+    public function returnJugs(Request $request, $id)
+    {
+        $returnJug = Order::find($id);
+
+        if ($returnJug) {
+            $returnJug->product->increment('product_quantity', $request->borrow);
+
+            $returnJug->decrement('borrow', $request->borrow);
+
+            return back()->with('approve', 'The jug was successfully returned');
+        } else {
+            return back()->with('error', 'Something went wrong.');
+        }
     }
 
     // public function sendSms(Request $request)

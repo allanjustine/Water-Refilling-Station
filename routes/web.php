@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Customer1Controller;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GcashController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderStatusController;
 
@@ -17,8 +18,10 @@ use App\Http\Controllers\OrderStatusController;
 
 //////////////////////////////////////////////////////////////////////////
 Route::get('/closed', [UserProfileController::class, 'closed']);
-
 Route::get('/', function () {
+    if(auth()->check()) {
+        return back();
+    }
     return view('welcome');
 });
 
@@ -34,8 +37,8 @@ Route::post('/subscription/renewal', [Customer1Controller::class, 'renewalSubmit
 ////////////////////////////////////////////////
 
 // Additional Registration Route
-Route::get('/register1', 'Auth\RegisterController@showRegistrationForm1')->name('register1');
-Route::post('/register1', 'Auth\RegisterController@register1');
+Route::get('/subscription/{subscription_type}', 'Auth\RegisterController@showRegistrationForm1')->name('subscription.showRegistrationForm1');
+Route::post('/subscription', 'Auth\RegisterController@register1')->name('register1');
 
 
 //////////////////DISPLAY PRODUCT//////////////
@@ -47,6 +50,7 @@ Auth::routes();
 //////////////////////////////////////////////////////////////////////////
 // Customer Users Routes List
 Route::middleware(['auth', 'user-access:user'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/customer/home', [HomeController::class, 'customerHome'])->name('customer.home');
 
     // Customer Profile
@@ -62,11 +66,12 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/customer/purchase-confirmation/{id}', [CustomerController::class, 'purchaseConfirmation']);
     Route::delete('/customer/purchase-confirmation/{id}', [CustomerController::class, 'purchaseDelete'])->name('purchase.delete');
     Route::get('/customer/my-orders', [CustomerController::class, 'myOrders']);
+    Route::get('/customer/settings/{id}', [HomeController::class, 'mySettings']);
+    Route::put('/customer/settings/update/{id}', [HomeController::class, 'updateSettings'])->name('update.settings');
 
     // Add this new route
     Route::post('/customer/acknowledge-water/{orderId}', [CustomerController::class, 'acknowledgeWater']);
-
-
+    Route::put('/repurchase/{id}', [CustomerController::class, 'repurchase']);
 });
 
 // Admin Routes List
@@ -97,54 +102,57 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::post('/admin/allsubscribers', 'AdminController@createInvoice')->name('invoice');
     Route::put('/admin/{id}', 'AdminController@disable')->name('admin.disable');
     Route::put('/{id}', 'AdminController@enable')->name('admin.enable');
-
-
 });
 
 // Subscribers Routes List
 Route::middleware(['auth', 'user-access:WRF'])->group(function () {
     Route::get('/subscribers/home', [HomeController::class, 'subscribersHome'])->name('subscribers.home');
 
+    Route::get('/subscriber/settings/{id}', [HomeController::class, 'mySettings']);
+    Route::get('/subscribers/gcash-information', [GcashController::class, 'index']);
+    Route::get('/subscribers/gcash-create', [GcashController::class, 'create']);
+    Route::post('/subscribers/gcash', [GcashController::class, 'store']);
+    Route::delete('/gcash/delete/{id}', [GcashController::class, 'destroy']);
+    Route::get('/subscribers/gcash-information/edit/{id}', [GcashController::class, 'edit']);
+    Route::put('/subscribers/gcash-information/update/{id}', [GcashController::class, 'update']);
+    Route::put('/subscriber/settings/update/{id}', [HomeController::class, 'updateSettings'])->name('update.settings');
 
     // Customer Profile
-    route::get('/subscribers/profile', [UserProfileController::class, 'SubuserProfile'])->name('subscribers.profile');
+    Route::get('/subscribers/profile', [UserProfileController::class, 'SubuserProfile'])->name('subscribers.profile');
 
 
-        // PRODUCT MANAGE
-        Route::get('/subscribers/products', [AdminController::class, 'manageProducts']);
-        Route::get('/subscribers/products/create', [AdminController::class, 'createProduct']);
-        Route::post('/subscribers/products/store', [AdminController::class, 'storeProduct']);
-            // PRODUCT MANAGE
-        Route::get('/subscribers/products/{id}/edit', [AdminController::class, 'editProduct']);
-        Route::put('/subscribers/products/{id}/update', [AdminController::class, 'updateProduct']);
-        Route::get('/subscribers/products/{id}/delete', [AdminController::class, 'deleteProduct']);
-        // Update the delete route to use the 'destroyProduct' method
+    // PRODUCT MANAGE
+    Route::put('/return/jugs/{id}', [AdminController::class, 'returnJugs']);
+    Route::get('/subscribers/products', [AdminController::class, 'manageProducts']);
+    Route::get('/subscribers/products/create', [AdminController::class, 'createProduct']);
+    Route::post('/subscribers/products/store', [AdminController::class, 'storeProduct']);
+    // PRODUCT MANAGE
+    Route::get('/subscribers/products/{id}/edit', [AdminController::class, 'editProduct']);
+    Route::put('/subscribers/products/{id}/update', [AdminController::class, 'updateProduct']);
+    Route::get('/subscribers/products/{id}/delete', [AdminController::class, 'deleteProduct']);
+    // Update the delete route to use the 'destroyProduct' method
 
-        // APPROVAL
-        Route::get('/subscribers/orders', [AdminController::class, 'viewOrdersForApproval'])->name('subscribers.view-orders-for-approval');
-        Route::post('/subscribers/orders/{order}/approve', [AdminController::class, 'approveOrder'])->name('subscribers.approve-order');
+    // APPROVAL
+    Route::get('/subscribers/orders', [AdminController::class, 'viewOrdersForApproval'])->name('subscribers.view-orders-for-approval');
+    Route::post('/subscribers/orders/{order}/approve', [AdminController::class, 'approveOrder'])->name('subscribers.approve-order');
 
-        Route::patch('/subscribers/approve-order/{orderId}', 'AdminController@approveOrder')->name('approveOrder');
+    Route::post('/subscribers/approve-order/{orderId}', 'AdminController@approveOrder')->name('approveOrder');
+    Route::post('/cancel/order/{id}', [AdminController::class, 'cancelOrder']);
 
-
-        Route::get('/subscribers/orders/{order}/status', [OrderController::class, 'orderStatus'])->name('subscribers.order-status');
-
-
-        Route::get('/subscribers/orders/status/{status}', 'OrderStatusController@index');
-        Route::put('/subscribers/orders/status/{id}', 'AdminController@verifyOrder')->name('verify');
-
-        //SMS
-        Route::put('/subscribers/orders/status', 'AdminController@sendSms')->name('send-sms');
-
-        // For success messages
-        return redirect('/subscribers/products')->with('message', 'Product created successfully');
-
-        // For error messages
-        return redirect()->back()->withErrors(['error' => 'Unauthorized action.']);
+    Route::get('/subscribers/orders/{order}/status', [OrderController::class, 'orderStatus'])->name('subscribers.order-status');
 
 
+    Route::get('/subscribers/orders/status/{status}', 'OrderStatusController@index');
+    Route::put('/subscribers/orders/status/{id}', 'AdminController@verifyOrder')->name('verify');
 
+    //SMS
+    Route::put('/subscribers/orders/status', 'AdminController@sendSms')->name('send-sms');
 
+    // For success messages
+    return redirect('/subscribers/products')->with('message', 'Product created successfully');
+
+    // For error messages
+    return redirect()->back()->withErrors(['error' => 'Unauthorized action.']);
 });
 
 Route::middleware('auth')->group(function () {
@@ -153,16 +161,16 @@ Route::middleware('auth')->group(function () {
     Route::put('/settings/update/{id}', [HomeController::class, 'updateSettings'])->name('update.settings');
 });
 
-    use App\Http\Controllers\SubscriptionController;
+Route::middleware('auth')->group(function () {
+// use App\Http\Controllers\SubscriptionController;
 
-    Route::get('/subscribe', [SubscriptionController::class, 'showSubscriptionForm'])->name('subscribe.form');
-    Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
+// Route::get('/subscribe', [SubscriptionController::class, 'showSubscriptionForm'])->name('subscribe.form');
+// Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
+    Route::get('/settings/{id}', [HomeController::class, 'mySettings']);
+    Route::put('/settings/update/{id}', [HomeController::class, 'updateSettings'])->name('update.settings');
+});
 
-
-    // routes/web.php
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+// routes/web.php
 
 
 //NOTIFICATIONS

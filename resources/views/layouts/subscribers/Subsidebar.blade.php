@@ -11,7 +11,8 @@
             width: 250px;
             height: 100%;
             position: fixed;
-            top: 0; /* Adjusted to 0 */
+            top: 0;
+            /* Adjusted to 0 */
             left: 0;
             background-color: #333;
             padding-top: 20px;
@@ -34,13 +35,16 @@
         }
 
         .sidebar a:hover {
-            color: white; /* Change the color on hover as needed */
+            color: white;
+            /* Change the color on hover as needed */
         }
 
         /* Adjust the main content area to accommodate the sidebar */
         .main-content {
-            margin-left: 200px; /* Adjusted to match sidebar width */
-            padding-left: 20px; /* Added padding to create space between sidebar and content */
+            margin-left: 200px;
+            /* Adjusted to match sidebar width */
+            padding-left: 20px;
+            /* Added padding to create space between sidebar and content */
         }
 
 
@@ -67,76 +71,79 @@
         .bn38:hover {
             background-color: #60605e;
         }
+
     </style>
 </head>
 <body>
 
-<div class="sidebar">
-    <br><br>
-    <ul>
-    <li>
-        <a class="bn3637 bn38" href="{{ route('subscribers.home') }}">
-            <i class="fas fa-home"></i> Dashboard
-        </a>
-    </li>
-    {{-- <li>
+    <div class="sidebar">
+        <br><br>
+        <ul>
+            <li>
+                <a class="bn3637 bn38" href="{{ route('subscribers.home') }}">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+            </li>
+            {{-- <li>
         <a class="bn3637 bn38" href="{{ url('/product/{id}') }}">
             <i class="fas fa-shopping-cart"></i> ALL SHOP
-        </a>
-    </li> --}}
-    <li>
-        <a class="bn3637 bn38" href="{{ url('subscribers/products') }}">
-            <i class="fas fa-cube"></i> Products
-        </a>
-    </li>
-    <li>
-        <a class="bn3637 bn38" href="{{ url('subscribers/products/create') }}">
-            <i class="fas fa-plus-circle"></i> Create Products
-        </a>
-    </li>
-    <li>
-        <a class="bn3637 bn38" href="{{ url('subscribers/orders') }}">
-            <i class="fas fa-check-circle"></i> Approval
-        </a>
-    </li>
+            </a>
+            </li> --}}
+            <li>
+                <a class="bn3637 bn38" href="{{ url('subscribers/products') }}">
+                    <i class="fas fa-cube"></i> Products
+                </a>
+            </li>
+            <li>
+                <a class="bn3637 bn38" href="{{ url('subscribers/orders') }}">
+                    <i class="fas fa-check-circle"></i> Approval ({{ \App\Models\Order::where('status', 'Pending')->whereHas('product', function ($query) {
+                $query->where('user_id', auth()->user()->id);
+            })->count() }})
+                </a>
+            </li>
 
-    <li>
-        <a class="bn3637 bn38" href="{{ url('subscribers/orders/status/On Process') }}">
-            <i class="fas fa-check-circle"></i> On Process
-        </a>
-    </li>
-    <li>
-        <a class="bn3637 bn38" href="{{ url('subscribers/orders/status/For Delivery') }}">
-            <i class="fas fa-check-circle"></i> For Delivery
-        </a>
-    </li>
-    <li>
-        <a class="bn3637 bn38" href="{{ url('subscribers/orders/status/Delivered') }}">
-            <i class="fas fa-check-circle"></i> Delivered
-        </a>
-    </li>
-    <li>
-        <a class="bn3637 bn38" href="{{ url('subscribers/orders/status/Paid') }}">
-            <i class="fas fa-check-circle"></i> Paid
-        </a>
-    </li>
-    <li>
-        <a class="bn3637 bn38" href="/chatify/1">
-            <i class="fas fa-check-circle"></i> Chat({{ \App\Models\ChMessage::where('to_id', auth()->user()->id)->where('seen', 0)->count() }})
-        </a>
-    </li>
-
-
-
-
+            <li>
+                <a class="bn3637 bn38" href="{{ url('subscribers/orders/status/On Process') }}">
+                    <i class="fas fa-check-circle"></i> On Process
+                </a>
+            </li>
+            <li>
+                <a class="bn3637 bn38" href="{{ url('subscribers/orders/status/For Delivery') }}">
+                    <i class="fas fa-check-circle"></i> For Delivery
+                </a>
+            </li>
+            <li>
+                <a class="bn3637 bn38" href="{{ url('subscribers/orders/status/Delivered') }}">
+                    <i class="fas fa-check-circle"></i> Delivered
+                </a>
+            </li>
+            <li>
+                <a class="bn3637 bn38" href="{{ url('subscribers/orders/status/Paid') }}">
+                    <i class="fas fa-check-circle"></i> Paid
+                </a>
+            </li>
+            <li>
+                <a class="bn3637 bn38" href="{{ url('subscribers/gcash-information') }}">
+                    <i class="fas fa-check-circle"></i> Gcash info
+                </a>
+            </li>
+            <li>
+                <a class="bn3637 bn38" href="/chatify/1">
+                    <i class="fas fa-check-circle"></i> Chat({{ \App\Models\ChMessage::where('to_id', auth()->user()->id)->where('seen', 0)->count() }})
+                </a>
+            </li>
 
 
 
-    <!-- Add more sidebar links as needed -->
-</ul>s
 
 
-</div>
+
+
+            <!-- Add more sidebar links as needed -->
+        </ul>s
+
+
+    </div>
 
 </body>
 </html>

@@ -10,7 +10,7 @@
         }
 
         body {
-            background-image: url('{{ asset('../images/3.jpg') }}');
+            background-image: url('{{ asset('../images/bg.jpg') }}');
             background-size: cover;
             /* Adjust as needed */
             background-repeat: no-repeat;

@@ -93,11 +93,11 @@
 
                                     @if ($data['user']->type == 'WRF')
                                         <td>
-                                            <a href="{{ url('delete', $data['user']->id) }}">Delete</a>
+                                            <!---<a href="{{ url('delete', $data['user']->id) }}">Delete</a>---->
                                             <a href="{{ route('users.edit', $data['user']->id) }}">Update</a>
 
-                                            {{-- <a href="#" data-bs-toggle="modal"
-                                                data-bs-target="#disable{{ $data['user']->id }}">Disable</a> --}}
+                                            <a href="#" data-bs-toggle="modal"
+                                                data-bs-target="#disable{{ $data['user']->id }}">Disable</a>
 
                                             <div class="d-flex">
                                                 <a href="#" data-bs-toggle="modal"

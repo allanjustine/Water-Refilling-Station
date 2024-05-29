@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
         /* Add styling for the sidebar */
         .sidebar {
@@ -77,12 +78,12 @@
     <div class="sidebar">
         <br><br>
         <ul>
-            <li><a class="bn3637 bn38" href="{{ route('customer.home') }}">Dashboard</a></li>
+            <li><a class="bn3637 bn38" href="{{ route('dashboard') }}">Dashboard</a></li>
             <li><a class="bn3637 bn38" href="{{ url('customer/cart') }}">My
                     Cart({{ auth()->user()->carts()->count() }})</a></li>
             <li><a class="bn3637 bn38" href="{{ url('customer/my-orders') }}">My
                     Orders({{ auth()->user()->orders()->count() }})</a></li>
-            <li><a class="bn3637 bn38" href="{{ url('customer/product') }}">Products</a></li>
+            <li><a class="bn3637 bn38" href="/water-refilling/products/{{ auth()->user()->municipality }}">Products</a></li>
 
             <li>
                 <a class="bn3637 bn38" href="/chatify/1">

@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Notifications\Notification;
 use Laravel\Cashier\Billable;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -73,6 +74,11 @@ class User extends Authenticatable
         return view('admin.profile', ['user' => $user]);
     }
 
+    public function routeNotificationForVonage(Notification $notification): string
+    {
+        return $this->phone;
+    }
+
 
     public function cartItems()
     {
@@ -97,6 +103,10 @@ class User extends Authenticatable
     public function invoices()
     {
     return $this->hasMany(Invoice::class);
+    }
+    public function gcashDetails()
+    {
+        return $this->hasMany(GcashDetail::class);
     }
 
 

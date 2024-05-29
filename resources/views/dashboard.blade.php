@@ -4,9 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css1/styles.css">
 
     <title>Water Refilling Station</title>
+    <link rel="shortcut icon" href="/images/front-logo.png" type="image/x-icon">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -22,13 +23,19 @@
         }
 
         body {
-            background-image: url('{{ asset('../images/3.jpg') }}');
+            background-image: url('{{ asset('../images/bg.jpg') }}');
             background-size: cover;
             /* Adjust as needed */
             background-repeat: no-repeat;
             background-attachment: fixed;
             /* Ensures the background stays fixed while scrolling */
         }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+        }
+
     </style>
 </head>
 
@@ -37,36 +44,39 @@
 
 
     <!--- Center ----->
-    <center class="nems">
-        <br>
-        <img src="{{ asset('../images/wrs.jpeg') }}" width="250px" class="circle-logo">
-        <br><br><br><br><br>
-        <p id="currentTime"></p><br><br>
+    <center>
+        <div class="col-md-6" style="margin-top: 10%;">
+            <div class="card border">
+                <div class="card-body">
+                    <br>
+                    <h2>Welcome to Municipality of <strong>{{ auth()->user()->municipality }}</strong></h2>
+                    <br><br><br>
+                    <p id="currentTime"></p><br><br>
 
-        @if (Route::has('login'))
-            <div>
-                @auth
-                    @if (Auth::user()->type == 'user')
-                        <a href="{{ url('/water-refilling') }}"
-                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 bn5">FIND STATIONS</a>
-                    @elseif (Auth::user()->type == 'admin')
-                        <a href="{{ url('/admin/home') }}"
-                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 bn5">ADMIN
+                    @if (Route::has('login'))
+                    <div>
+                        @auth
+                        @if (Auth::user()->type == 'user')
+                        <a href="/water-refilling/products/{{ auth()->user()->municipality }}" class="btn btn-dark">FIND STATIONS</a>
+                        <br>
+                        <a href="/customer/home" class="btn btn-secondary mt-2">HOME</a>
+                        @elseif (Auth::user()->type == 'admin')
+                        <a href="{{ url('/admin/home') }}" class="btn btn-dark">ADMIN
                             DASHBOARD</a>
-                    @elseif (Auth::user()->type == 'WRF')
-                        <a href="{{ url('/subscribers/home') }}"
-                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 bn5">SUBSCRIBERS
+                        @elseif (Auth::user()->type == 'WRF')
+                        <a href="{{ url('/subscribers/home') }}" class="btn btn-dark">SUBSCRIBERS
                             DASHBOARD</a>
-                    @else
-                        <a href="{{ url('/product') }}"
-                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 bn5">WAITING FOR APPROVAL (PROCEED AS CUSTOMER?)</a>
+                        @else
+                        <a href="{{ url('/product') }}" class="btn btn-dark">WAITING FOR APPROVAL (PROCEED AS CUSTOMER?)</a>
+                        @endif
+                        @else
+                        <a href="{{ url('/product/{id}') }}" class="btn btn-dark">ENTER</a>
+                        @endauth
+                    </div>
                     @endif
-                @else
-                    <a href="{{ url('/product/{id}') }}"
-                        class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 bn5">ENTER</a>
-                @endauth
+                </div>
             </div>
-        @endif
+        </div>
 
 
     </center>

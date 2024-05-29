@@ -103,15 +103,13 @@ class HomeController extends Controller
     {
         $user = User::find($id);
 
-        $request->validate([
-            'station'           =>          ['required']
-        ]);
+
 
         if ($request->hasFile('avatar')) {
             if ($user->avatar) {
                 Storage::disk('public')->delete($user->avatar);
             }
-
+            $imagePath = $request->file('avatar')->store('users-avatar', 'public');
             $imagePath = $request->file('avatar')->store('users-avatar/users-avatar', 'public');
         } else {
             $imagePath = $user->avatar;
@@ -119,6 +117,7 @@ class HomeController extends Controller
 
         $user->update([
             'station'        =>          $request->station,
+            'municipality' => $request->municipality,
             'avatar'        =>          $imagePath
         ]);
 
@@ -156,18 +155,15 @@ class HomeController extends Controller
         $daysUntilExpiration1Year = now()->diffInDays($user->created_at->addYear());
 
 
-        $borrow = Order::where('jug_status', 'Borrow')
-            ->whereIn('product_id', $user->products->pluck('id'))
-            ->sum('order_quantity');
-        $sold = Order::where('jug_status', 'Sold')
-            ->whereIn('product_id', $user->products->pluck('id'))
-            ->sum('order_quantity');
+        $borrow = Order::where('status', '!=', 'Pending')->sum('borrow');
+        $sold = Order::where('status', '!=', 'Pending')->sum('buy');
 
         $totalSales = Order::where('status', 'Paid')
             ->whereIn('product_id', $user->products->pluck('id'))
             ->get()
             ->sum(function ($order) {
-                return $order->product->price * $order->order_quantity;
+                $total = $order->order_quantity + $order->own;
+                return $order->product->price * $total;
             });
 
         $today = now()->toDateString();
@@ -177,7 +173,8 @@ class HomeController extends Controller
             ->whereDate('created_at', $today)
             ->get()
             ->sum(function ($order) {
-                return $order->product->price * $order->order_quantity;
+                $total = $order->order_quantity + $order->own;
+                return $order->product->price * $total;
             });
 
         $now = now();
@@ -188,11 +185,17 @@ class HomeController extends Controller
             ->whereMonth('created_at', $now->month)
             ->get()
             ->sum(function ($order) {
-                return $order->product->price * $order->order_quantity;
+                $total = $order->order_quantity + $order->own;
+                return $order->product->price * $total;
             });
 
+        $dailyReports = Order::where('status', 'Paid')
+        ->whereIn('product_id', $user->products->pluck('id'))
+        ->orderBy('created_at', 'desc')
+        ->get();
 
-        return view('subscribers.home', compact('user', 'daysUntilExpiration1Month', 'daysUntilExpiration1Year', 'borrow', 'sold', 'totalSales', 'todaySales', 'monthlySales', 'invoices'));
+
+        return view('subscribers.home', compact('user', 'daysUntilExpiration1Month', 'daysUntilExpiration1Year', 'borrow', 'sold', 'totalSales', 'todaySales', 'monthlySales', 'invoices', 'dailyReports'));
     }
 
     /** Delete */

@@ -26,7 +26,12 @@ class Customer1Controller extends Controller
         $usersWithMunicipality = User::where('municipality', $municipality)->get();
         $products = Product::whereIn('user_id', $usersWithMunicipality->pluck('id'))->get();
 
-        return view('product', compact('products', 'user'));
+        $groupedProducts = $products->groupBy(function ($product) {
+            return $product->user->station;
+        });
+
+
+        return view('product', compact('groupedProducts', 'user'));
     }
 
     public function renewal()

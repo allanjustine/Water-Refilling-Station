@@ -12,6 +12,9 @@ class CreateCartsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_id');
+            $table->string('borrow')->nullable();
+            $table->string('own')->nullable();
+            $table->string('buy')->nullable();
             $table->unsignedInteger('quantity')->default(1);
             $table->timestamps();
 
@@ -20,7 +23,7 @@ class CreateCartsTable extends Migration
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-        });        
+        });
     }
 
     public function down()

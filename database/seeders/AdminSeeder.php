@@ -19,6 +19,7 @@ class AdminSeeder extends Seeder
             'phone'=> '09123451231',
             'email' => 'admin@gmail.com',
             'type' => 1,
+            'subscription_type' => 'infinite',
             'password' => bcrypt('password')
         ]);
     }

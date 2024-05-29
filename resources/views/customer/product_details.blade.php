@@ -10,7 +10,7 @@
         }
 
         body {
-            background-image: url('{{ asset('../images/3.jpg') }}');
+            background-image: url('{{ asset('../images/bg.jpg') }}');
             background-size: cover;
             /* Adjust as needed */
             background-repeat: no-repeat;
@@ -62,8 +62,7 @@
                                                 <p><a href="/chatify/{{ $product->user->id }}">Contact Now</a></p>
                                             @endauth
                                         </td>
-                                        <td>Address: {{ $product->user->municipality }}, {{ $product->user->station }}</td>
-
+                                        <td>Address: {{ $product->user->municipality }}, {{ $product->user->station }}, {{ $product->user->address }}</td>
                                         <td>
                                             <label for="quantity">Quantity:</label>
                                             <input type="number" name="quantity" value="1" min="1"

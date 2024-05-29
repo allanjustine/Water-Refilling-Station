@@ -13,6 +13,8 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/images/aw.png" type="image/x-icon">
 
     <style>
         /*----------- BN5 ------------ */
@@ -90,6 +92,7 @@
             top: 0;
             border-radius: 10px;
         }
+
     </style>
 
     <!-- Scripts -->
@@ -100,12 +103,12 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+
+                <img src="/images/aw.png" style="width: 60px; height: 60px; object-fit: cover; border-radius: 50%; margin-right: 5px;" alt="logo">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <b>Water Refilling Station</b>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -121,64 +124,61 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item">
-                                <a style="color: white;" class="nav-link bn5"
-                                    href="{{ url('/') }}">{{ __('Back') }}</a>
-                            </li>
+                        <li class="nav-item">
+                            <a style="color: white;" class="nav-link bn5" href="{{ url('/') }}">{{ __('Back') }}</a>
+                        </li>
 
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
+                        @if (Route::has('login'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        @endif
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
+                        @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                        @endif
                         @else
-                            <li class="nav-item dropdown">
-                                @if (Auth::check())
-                                    @if (Auth::user()->type == 'admin')
-                                        <!-- Redirect admin to admin.home -->
-                                        <a href="{{ route('admin.home') }}" class="dropdown-item"><b>Admin
-                                                Dashboard</b></a>
-                                    @elseif(Auth::user()->type == 'WRF')
-                                        <!-- Redirect subscribers to subscribers.home -->
-                                        <a href="{{ route('subscribers.home') }}" class="dropdown-item"><b>Subscribers
-                                                Dashboard</b></a>
-                                    @elseif(Auth::user()->type == 'user')
-                                        <!-- Redirect other users to the customer home -->
-                                        <a href="{{ route('customer.home') }}" class="dropdown-item"><b>Customer
-                                                Dashboard</b></a>
-                                    @else
-                                        <a href="#" class="dropdown-item"><b>Sorry Waiting for Approval</b></a>
-                                    @endif
-                                @endif
+                        <li class="nav-item dropdown">
+                            @if (Auth::check())
+                            @if (Auth::user()->type == 'admin')
+                            <!-- Redirect admin to admin.home -->
+                            <a href="{{ route('admin.home') }}" class="dropdown-item"><b>Admin
+                                    Dashboard</b></a>
+                            @elseif(Auth::user()->type == 'WRF')
+                            <!-- Redirect subscribers to subscribers.home -->
+                            <a href="{{ route('subscribers.home') }}" class="dropdown-item"><b>Subscribers
+                                    Dashboard</b></a>
+                            @elseif(Auth::user()->type == 'user')
+                            <!-- Redirect other users to the customer home -->
+                            <a href="{{ route('dashboard') }}" class="dropdown-item"><b>Customer
+                                    Dashboard</b></a>
+                            @else
+                            <a href="#" class="dropdown-item"><b>Sorry Waiting for Approval</b></a>
+                            @endif
+                            @endif
 
 
-                                <!-- Your existing dropdown menu -->
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                            <!-- Your existing dropdown menu -->
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <!-- Your existing dropdown menu items -->
+
+                                <!--- LOGOUT --->
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
+                                    <b>{{ __('Logout') }}</b>
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <!-- Your existing dropdown menu items -->
-
-                                    <!--- LOGOUT --->
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
-                                        <b>{{ __('Logout') }}</b>
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
                         @endguest
                     </ul>
 
@@ -192,6 +192,10 @@
             @yield('content')
         </main>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
