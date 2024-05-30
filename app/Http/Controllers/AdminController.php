@@ -250,7 +250,7 @@ class AdminController extends Controller
 
             if ($request->status == 'For Delivery') {
 
-                $basic  = new \Vonage\Client\Credentials\Basic("5c3c9212", "jrFiiXK46ynfBu3n");
+                $basic  = new \Vonage\Client\Credentials\Basic("7500220b", "H499iNJ3mMAZYHI4");
                 $client = new \Vonage\Client($basic);
 
                 if ($request->payment_method == 'Cash on Delivery') {

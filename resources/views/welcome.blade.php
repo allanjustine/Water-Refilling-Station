@@ -25,6 +25,9 @@
             justify-content: center;
             align-items: center;
         }
+        .card {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
 
         #card-subs:hover {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.381);

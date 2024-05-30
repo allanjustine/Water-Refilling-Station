@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
@@ -38,8 +39,8 @@ class TimeBasedRoutingMiddleware
         $close = 18;
 
         if ($now->hour >= $open && $now->hour < $close) {
-                return $next($request);
-            }
+            return $next($request);
+        }
 
         $hour = now()->hour;
 
