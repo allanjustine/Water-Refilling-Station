@@ -66,7 +66,7 @@
                             @endif
                             Created by: {{ $cartItem->product->user->name }}
                             <br>
-                            {{ $cartItem->product->name }} - Quantity: {{ $cartItem->quantity }} - Own: {{ $cartItem->own }} -
+                            {{ $cartItem->product->name }} - Quantity: x{{ $cartItem->quantity }} - Own: x{{ $cartItem->own }} -
                             ₱{{ number_format(($cartItem->quantity + $cartItem->own) * $cartItem->product->price, 2) }}
                             <a href="/customer/cart/{{ $cartItem->id }}/remove" class="btn btn-danger">Remove</a>
                             <br><br>

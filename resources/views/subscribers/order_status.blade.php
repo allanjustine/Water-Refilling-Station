@@ -57,7 +57,10 @@
                             @foreach ($orders as $order)
                             <tr>
                                 <td>{{ $order->id }}</td>
-                                <td class="text-danger"><b>{{ $order->user->name }}</b></td>
+                                <td>
+                                    <b><p class="text-danger">{{ $order->user->name }}</p></b>
+                                    <p><strong>{{ $order->user->address }}, {{ $order->user->municipality }}</strong></p>
+                                </td>
                                 <td>
                                     <img src="{{ asset('storage/' . $order->product->image) }}" alt="Product Image" class="product-image">
                                 </td>

@@ -160,6 +160,7 @@ class HomeController extends Controller
 
         $totalSales = Order::where('status', 'Paid')
             ->whereIn('product_id', $user->products->pluck('id'))
+
             ->get()
             ->sum(function ($order) {
                 $total = $order->order_quantity + $order->own;
@@ -169,6 +170,7 @@ class HomeController extends Controller
         $today = now()->toDateString();
 
         $todaySales = Order::where('status', 'Paid')
+
             ->whereIn('product_id', $user->products->pluck('id'))
             ->whereDate('created_at', $today)
             ->get()
@@ -180,6 +182,7 @@ class HomeController extends Controller
         $now = now();
 
         $monthlySales = Order::where('status', 'Paid')
+
             ->whereIn('product_id', $user->products->pluck('id'))
             ->whereYear('created_at', $now->year)
             ->whereMonth('created_at', $now->month)
@@ -190,6 +193,7 @@ class HomeController extends Controller
             });
 
         $dailyReports = Order::where('status', 'Paid')
+
         ->whereIn('product_id', $user->products->pluck('id'))
         ->orderBy('created_at', 'desc')
         ->get();

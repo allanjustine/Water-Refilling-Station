@@ -38,7 +38,7 @@ class CustomerController extends Controller
         $quantityAdd = ($request->borrow ?? 0) + ($request->buy ?? 0);
 
         // Ensure the total quantity is at least 1
-        if ($quantityAdd < 1) {
+        if ($quantityAdd < 1 && $request->own < 1) {
             return back()->with('error', 'The total quantity must be at least 1 or more. Please input 1 in any Borrow, Buy or Own Jugs.');
         }
 
