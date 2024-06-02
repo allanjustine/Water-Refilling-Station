@@ -155,8 +155,8 @@ class HomeController extends Controller
         $daysUntilExpiration1Year = now()->diffInDays($user->created_at->addYear());
 
 
-        $borrow = Order::where('status', '!=', 'Pending')->sum('borrow');
-        $sold = Order::where('status', '!=', 'Pending')->sum('buy');
+        $borrow = Order::where('status', '!=', 'Pending')->whereIn('product_id', $user->products->pluck('id'))->sum('borrow');
+        $sold = Order::where('status', '!=', 'Pending')->whereIn('product_id', $user->products->pluck('id'))->sum('buy');
 
         $totalSales = Order::where('status', 'Paid')
             ->whereIn('product_id', $user->products->pluck('id'))
@@ -164,7 +164,7 @@ class HomeController extends Controller
             ->get()
             ->sum(function ($order) {
                 $total = $order->order_quantity + $order->own;
-                return $order->product->price * $total;
+                return $order->product->price * $total + ($order->product->extra * $order->buy);
             });
 
         $today = now()->toDateString();
@@ -176,7 +176,7 @@ class HomeController extends Controller
             ->get()
             ->sum(function ($order) {
                 $total = $order->order_quantity + $order->own;
-                return $order->product->price * $total;
+                return $order->product->price * $total + ($order->product->extra * $order->buy);
             });
 
         $now = now();
@@ -189,7 +189,7 @@ class HomeController extends Controller
             ->get()
             ->sum(function ($order) {
                 $total = $order->order_quantity + $order->own;
-                return $order->product->price * $total;
+                return $order->product->price * $total + ($order->product->extra * $order->buy);
             });
 
         $dailyReports = Order::where('status', 'Paid')

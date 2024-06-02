@@ -73,7 +73,7 @@
                                         Created by: {{ $order->product->user->name }}
                                         <br>
                                         {{ $order->product->name }} - Quantity: x{{ $order->order_quantity }} - Own: x{{ $order->own }} -
-                                        ₱{{ number_format(($order->order_quantity + $order->own) * $order->product->price, 2) }}
+                                        ₱{{ number_format(($order->order_quantity + $order->own) * $order->product->price + ($order->product->extra * $order->buy), 2) }}
 
                                         <br><br>
                                         <div class="row">

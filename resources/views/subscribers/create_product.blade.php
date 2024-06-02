@@ -27,11 +27,15 @@
                         <br>
                         <div class="form-group">
                             <label for="price">Price:</label>
-                            <input type="number" name="price" class="form-control"  step="0.01" required>
+                            <input type="number" name="price" class="form-control"  min="1" required>
                         </div>
                         <div class="form-group">
                             <label for="product_quantity">Quantity:</label>
                             <input type="number" name="product_quantity" class="form-control"  min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="extra">Bottle Price:</label>
+                            <input type="number" name="extra" class="form-control"  min="1" required>
                         </div>
 
                         <!-- Add more fields as needed -->

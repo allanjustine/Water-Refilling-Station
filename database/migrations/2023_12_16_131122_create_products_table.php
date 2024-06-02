@@ -15,6 +15,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->decimal('price', 8, 2);
             $table->string('image');
+            $table->decimal('extra', 8, 2);
             $table->integer('product_quantity')->default(0);
             $table->unsignedBigInteger('user_id'); // Add this line for the user relationship
             $table->timestamps();

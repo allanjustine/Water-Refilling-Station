@@ -106,7 +106,7 @@
                                                             <hr>
                                                             <p>Borrow jugs</p>
                                                             <input class="form-control" value="0" name="borrow" type="number" min="0">
-                                                            <p>Buy jugs</p>
+                                                            <p>Buy jugs <span class="text-danger">(Buying jugs cost: ₱{{ $product->extra }})</span></p>
                                                             <input class="form-control" value="0" name="buy" type="number" min="0">
                                                             <p>Own jugs</p>
                                                             <input class="form-control" value="0" name="own" type="number" min="0">

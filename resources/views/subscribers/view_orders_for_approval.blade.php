@@ -77,7 +77,7 @@
                                     @endphp
                                     @else
                                     x{{ $order->order_quantity }}
-                                    <br>Own: x{{ $order->own }} <br> ₱{{ number_format(($order->order_quantity + $order->own) * $order->product->price, 2) }}
+                                    <br>Own: x{{ $order->own }} <br> ₱{{ number_format(($order->order_quantity + $order->own) * $order->product->price + ($order->product->extra * $order->buy), 2) }}
                                     @endif
                                 </td>
                                 <td>

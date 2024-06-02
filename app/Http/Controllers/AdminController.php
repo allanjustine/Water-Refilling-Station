@@ -40,6 +40,7 @@ class AdminController extends Controller
         $product->name = $request->input('name');
         $product->price = $request->input('price');
         $product->product_quantity = $request->input('product_quantity');
+        $product->extra = $request->input('extra');
         // other fields
 
         // Associate the product with the authenticated user
