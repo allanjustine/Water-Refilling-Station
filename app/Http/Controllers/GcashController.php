@@ -74,7 +74,7 @@ class GcashController extends Controller
         } else {
             $request->validate([
                 'account_name' => ['required', 'unique:gcash_details,account_name'],
-                'account_number' => ['required', 'numeric', 'digits:10', 'regex:/^9\d{9}$/']
+                'account_number' => ['required', 'numeric', 'digits:11', 'regex:/^9\d{9}$/']
             ]);
             $gcash->update([
                 'account_name'  =>  $request->account_name,
