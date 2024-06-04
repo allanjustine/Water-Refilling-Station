@@ -174,7 +174,7 @@ class CustomerController extends Controller
 
     public function myOrders()
     {
-        $orders = Order::orderBy('created_at', 'desc')->get();
+        $orders = Order::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
 
         return view('customer.my-orders', compact('orders'));
     }
