@@ -39,6 +39,7 @@ Route::post('/subscription/renewal', [Customer1Controller::class, 'renewalSubmit
 // Additional Registration Route
 Route::get('/subscription/{subscription_type}', 'Auth\RegisterController@showRegistrationForm1')->name('subscription.showRegistrationForm1');
 Route::post('/subscription', 'Auth\RegisterController@register1')->name('register1');
+Route::post('/registerAcc', 'Auth\RegisterController@regAcc');
 
 
 //////////////////DISPLAY PRODUCT//////////////

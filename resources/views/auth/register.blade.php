@@ -54,31 +54,31 @@
                         <h3><strong>Register</strong></h3>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="/registerAcc">
                             @csrf
                             <div class="form-group">
                                 <label for="name"><strong>Name</strong></label>
-                                <input type="text" class="form-control" id="name" name="name" required>
+                                <input value="{{ old('name') }}" type="text" class="form-control" id="name" name="name" >
                                 @error('name')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-danger text-sm" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="email"><strong>Email address</strong></label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                                <input value="{{ old('email') }}" type="email" class="form-control" id="email" name="email" >
                                 @error('email')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-danger text-sm" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="phone"><strong>Phone number (9XXXXXXXXX)</strong></label>
-                                <input type="number" class="form-control" id="phone" placeholder="(9XXXXXXXXX)" name="phone" required>
+                                <input value="{{ old('phone') }}" type="number" class="form-control" id="phone" placeholder="(9XXXXXXXXX)" name="phone" >
                                 @error('phone')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-danger text-sm" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
@@ -86,7 +86,7 @@
                             <div class="form-group">
                                 <label for="municipality"><strong>Municipality</strong></label>
                                 <select name="municipality" id="municipality" class="form-control @error('municipality') is-invalid @enderror">
-                                    <option selected hidden>Select your Municipality
+                                    <option selected hidden value="">Select your Municipality
                                     </option>
                                     <option disabled>Select your Municipality</option>
                                     <optgroup label="MUNICIPALITY">
@@ -97,34 +97,34 @@
                                     </optgroup>
                                 </select>
                                 @error('municipality')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-danger text-sm" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="address"><strong>Address</strong></label>
-                                <input type="text" class="form-control" id="address" name="address" required>
+                                <input value="{{ old('address') }}" type="text" class="form-control" id="address" name="address" >
                                 @error('address')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-danger text-sm" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="password"><strong>Password</strong></label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                                <input value="{{ old('password') }}" type="password" class="form-control" id="password" name="password" >
                                 @error('password')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-danger text-sm" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="password_confirmation"><strong>Confirm password</strong></label>
-                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                                <input value="{{ old('password_confirmation') }}" type="password" class="form-control" id="password_confirmation" name="password_confirmation" >
                                 @error('password_confirmation')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-danger text-sm" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror

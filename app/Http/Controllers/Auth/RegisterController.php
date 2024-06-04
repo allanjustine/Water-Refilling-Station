@@ -30,7 +30,6 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -63,20 +62,29 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    public function regAcc(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|digits:10|regex:/^9\d{9}$/|numeric',
+            'municipality' => 'required',
+            'address' => 'required',
+            'password' => 'required|confirmed',
+        ]);
+
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => "+63" . $data['phone'],
-            'municipality' => $data['municipality'],
-            'address' => $data['address'],
-            'password' => Hash::make($data['password']),
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => "+63" . $request['phone'],
+            'municipality' => $request['municipality'],
+            'address' => $request['address'],
+            'password' => Hash::make($request['password']),
             'status' => 'pending',
         ]);
 
         // Redirect to admin dashboard after registration
-        return $user;
+        return redirect('/water-refilling/products/' . $user->municipality);
     }
 
     public function register1(Request $request)
