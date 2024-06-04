@@ -73,8 +73,8 @@ class GcashController extends Controller
             return redirect('/subscribers/gcash-information')->with('gcashMessageError', 'Gcash Information not found.');
         } else {
             $request->validate([
-                'account_name' => ['required'],
-                'account_number' => ['required']
+                'account_name' => ['required', 'unique:gcash_details,account_name'],
+                'account_number' => ['required', 'numeric', 'digits:10', 'regex:/^9\d{9}$/']
             ]);
             $gcash->update([
                 'account_name'  =>  $request->account_name,

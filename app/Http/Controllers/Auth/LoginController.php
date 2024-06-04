@@ -41,7 +41,7 @@ class LoginController extends Controller
                 auth()->logout();
                 return back()->with('disableError', 'You can`t login at this moment your subscription was expired and your account was disabled at this moment! Submit a renewal here: ');
             } else {
-                return redirect()->route('dashboard');
+                return redirect('/water-refilling/products/' . auth()->user()->municipality);
             }
         } else {
             return redirect()->route('login')
