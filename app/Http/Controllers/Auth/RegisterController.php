@@ -66,7 +66,7 @@ class RegisterController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'phone' => 'required|digits:10|regex:/^9\d{9}$/|numeric',
             'municipality' => 'required',
             'address' => 'required',
@@ -84,6 +84,7 @@ class RegisterController extends Controller
         ]);
 
         // Redirect to admin dashboard after registration
+        auth()->loginUsingId($user->id);
         return redirect('/water-refilling/products/' . $user->municipality);
     }
 
@@ -93,6 +94,7 @@ class RegisterController extends Controller
         $request->validate([
             'email'         =>      ['required', 'email', 'unique:users,email'],
             'password'      =>      ['required', 'min:8'],
+            'phone' => 'required|digits:10|regex:/^9\d{9}$/|numeric',
         ]);
         $user = User::create([
             'name' => $request->name,

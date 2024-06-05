@@ -62,31 +62,41 @@
                             @csrf
                             <div class="form-group">
                                 <label for="name"><strong>Name</strong></label>
-                                <input type="text" class="form-control" id="name" name="name" required>
+                                <input type="text" value="{{ old('name') }}" class="form-control" id="name" name="name" required>
                                 @error('name')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-sm text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="email"><strong>Email address</strong></label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                                <input type="email" value="{{ old('email') }}" class="form-control" id="email" name="email" required>
                                 @error('email')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-sm text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
+
                             <div class="form-group">
                                 <label for="phone"><strong>Phone number (9XXXXXXXXX)</strong></label>
-                                <input type="number" class="form-control" id="phone" placeholder="(9XXXXXXXXX)" name="phone" required>
+                                <input type="tel" value="{{ old('phone') }}" class="form-control" id="phone" placeholder="(9XXXXXXXXX)" name="phone" required>
                                 @error('phone')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-sm text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
+
+                            <!-- <script>
+                                document.getElementById("phone").addEventListener("input", function() {
+                                    if (this.value.length > 11) {
+                                        this.value = this.value.slice(0, 11); // Limit to 11 digits
+                                    }
+                                });
+                            </script> -->
+
                             <div class="form-group">
                                 <label for="municipality"><strong>Municipality</strong></label>
                                 <select name="municipality" id="municipality" class="form-control @error('municipality') is-invalid @enderror">
@@ -101,47 +111,65 @@
                                     </optgroup>
                                 </select>
                                 @error('municipality')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-sm text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="station"><strong>Station</strong></label>
-                                <input type="text" class="form-control" id="station" name="station" required>
+                                <input type="text" value="{{ old('station') }}" class="form-control" id="station" name="station" required>
                                 @error('station')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-sm text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="address"><strong>Address</strong></label>
-                                <input type="text" class="form-control" id="address" name="address" required>
+                                <input value="{{ old('address') }}" type="text" class="form-control" id="address" name="address" required>
                                 @error('address')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-sm text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
+
                             <div class="form-group">
                                 <label for="password"><strong>Password</strong></label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                                <input value="{{ old('password') }}" type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
                                 @error('password')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-sm text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
+
                             <div class="form-group">
                                 <label for="password_confirmation"><strong>Confirm password</strong></label>
-                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                                <input value="{{ old('password_confirmation') }}" type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                                 @error('password_confirmation')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="text-sm text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+                                <input type="checkbox" onclick="myFunction()">Show Password
                             </div>
+
+                            <script>
+                                function myFunction() {
+                                    var x = document.getElementById("password");
+                                    var y = document.getElementById("password_confirmation");
+                                    if (x.type === "password") {
+                                        x.type = "text";
+                                        y.type = "text";
+                                    } else {
+                                        x.type = "password";
+                                        y.type = "password";
+                                    }
+                                }
+                            </script>
+
                             <button type="submit" class="btn btn-primary btn-block">Register</button>
                         </form>
                     </div>

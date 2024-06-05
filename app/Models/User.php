@@ -108,8 +108,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(GcashDetail::class);
     }
-
-
-
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+    public function hasRatedOrder($orderId)
+    {
+        return $this->ratings()->where('order_id', $orderId)->exists();
+    }
 
 }

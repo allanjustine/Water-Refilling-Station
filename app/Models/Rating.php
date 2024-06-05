@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Rating extends Model
 {
+    use HasFactory;
+
     protected $guarded = [];
 
-    // Define relationships or other methods if necessary
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -19,12 +20,8 @@ class Order extends Model
     {
         return $this->belongsTo(Product::class);
     }
-    public function ratings()
+    public function order()
     {
-        return $this->hasMany(Rating::class);
+        return $this->belongsTo(Order::class);
     }
-
-    // Additional order statuses
-    const STATUS_FOR_DELIVERY = 'for_delivery';
-    const STATUS_DELIVERED = 'delivered';
 }

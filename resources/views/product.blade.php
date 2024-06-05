@@ -90,9 +90,9 @@
                                                 <form action="/customer/cart/{{ $product->id }}/add" method="post">
                                                     <div class="card border">
                                                         @if ($product->image)
-                                                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" style="height: 200px;">
+                                                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" style="height: 270px;">
                                                         @else
-                                                        <img src="/images/1702993470.png" alt="{{ $product->name }}" style="height: 250px;">
+                                                        <img src="/images/1702993470.png" alt="{{ $product->name }}" style="height: 270px;">
                                                         @endif
                                                         <div class="card-body">
                                                             <p>
@@ -101,6 +101,14 @@
                                                             <p>
                                                                 <h5>₱{{ $product->price }}</h5>
                                                             </p>
+                                                            <p>
+                                                                @php
+                                                                $ratingsCount = $product->ratings->count();
+                                                                $ratingsSum = $product->ratings->sum('user_rate');
+                                                                $averageRating = $ratingsCount > 0 ? $ratingsSum / $ratingsCount : 0;
+                                                                @endphp
+                                                                ({{ $averageRating }})<span class="text-warning">&starf;</span></p>
+                                                            <p class="text-center"><a href="/products/feedbacks/{{ $product->id }}" class="btn btn-link">View Product Feedbacks</a></p>
                                                             <hr>
                                                             <p class="text-danger"><strong>Warning:</strong>Select only the best quantity of the gallons specially to Borrow gallons</p>
                                                             <hr>

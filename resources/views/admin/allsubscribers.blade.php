@@ -162,9 +162,9 @@
                                                     @csrf
                                                     @method('PUT')
                                                     @if ($data['user']->subscription_type == '1_month')
-                                                        <input type="number" name="billings" hidden value="1000">
+                                                        <input type="number" name="billings" hidden value="200">
                                                     @else
-                                                        <input type="number" name="billings" hidden value="12000">
+                                                        <input type="number" name="billings" hidden value="500">
                                                     @endif
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Close</button>
@@ -238,9 +238,9 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     @if ($data['user']->subscription_type == '1_month')
-                                                        <input type="number" name="billings" hidden value="1000">
+                                                        <input type="number" name="billings" hidden value="200">
                                                     @else
-                                                        <input type="number" name="billings" hidden value="12000">
+                                                        <input type="number" name="billings" hidden value="500">
                                                     @endif
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Close</button>
@@ -267,10 +267,10 @@
                                                     <input type="number" name="user_id" value="{{ $data['user']->id }}"
                                                         hidden>
                                                     @if ($data['user']->subscription_type == '1_month')
-                                                        <input type="number" name="invoice_total" hidden value="1000"
+                                                        <input type="number" name="invoice_total" hidden value="200"
                                                             hidden>
                                                     @else
-                                                        <input type="number" name="invoice_total" hidden value="12000"
+                                                        <input type="number" name="invoice_total" hidden value="500"
                                                             hidden>
                                                     @endif
                                                     <div class="form-group mb-3">

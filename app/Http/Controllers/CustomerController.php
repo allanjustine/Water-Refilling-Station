@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\GcashDetail;
 use App\Models\User;
+use App\Models\Rating;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -227,5 +228,11 @@ class CustomerController extends Controller
         // Optionally, you can clear the cart or perform other actions
 
         return redirect('/customer/purchase-confirmation/' . $order->id)->with('message', 'Water Acknowledged successfully');
+    }
+
+    public function feedbacks($id)
+    {
+        $products = Product::find($id);
+        return view('customer.product-feedback', compact('products'));
     }
 }

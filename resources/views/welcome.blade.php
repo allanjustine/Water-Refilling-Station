@@ -57,7 +57,7 @@
             <p class="lead">Stay hydrated and drink enough water everday</p>
             <p class="lead">Buy water or Subscribe to sell water</p>
             <form class="form-inline justify-content-center">
-                <a href="/register" class="btn btn-info mb-2 ml-2">Register</a>
+                <a href="/register" class="btn btn-primary mb-2 ml-2">Register</a>
                 <a href="#" class="btn btn-primary mb-2 ml-2" data-toggle="modal" data-target="#subscribeModal1">Subscribe</a>
             </form>
         </div>
@@ -79,7 +79,7 @@
                                 <div class="card" id="card-subs">
                                     <div class="card-body text-center">
                                         <h5 class="card-title">Standard</h5>
-                                        <p class="card-text">₱1,000/Month</p>
+                                        <p class="card-text">₱200/Month</p>
                                         <a class="btn btn-primary" href="/subscription/1_month">
                                             Get
                                         </a>
@@ -90,7 +90,7 @@
                                 <div class="card" id="card-subs">
                                     <div class="card-body text-center">
                                         <h5 class="card-title">Premium</h5>
-                                        <p class="card-text">₱12,000/Year</p>
+                                        <p class="card-text">₱500/Year</p>
                                         <a class="btn btn-primary" href="/subscription/1_year">
                                             Get
                                         </a>

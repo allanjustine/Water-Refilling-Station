@@ -184,6 +184,7 @@
                                 </span>
                                 @enderror
                             </div>
+
                             <div class="form-group">
                                 <label for="password"><strong>Password</strong></label>
                                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
@@ -192,7 +193,23 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+
                             </div>
+                            <input type="checkbox" onclick="myFunction()">
+                            <label for="">Show Password</label>
+
+                            <script>
+                                function myFunction() {
+                                    var x = document.getElementById("password");
+                                    if (x.type === "password") {
+                                        x.type = "text";
+                                    } else {
+                                        x.type = "password";
+                                    }
+                                }
+                            </script>
+
+
                             <button type="submit" class="btn btn-primary btn-block">Login</button>
                             <p class="text-center mt-3">OR</p>
 
@@ -229,7 +246,7 @@
                                 <div class="card border" id="card-subs">
                                     <div class="card-body text-center">
                                         <h5 class="card-title">Standard</h5>
-                                        <p class="card-text">₱1,000/Month</p>
+                                        <p class="card-text">₱200/Month</p>
                                         <a class="btn btn-primary" href="/subscription/1_month">
                                             Get
                                         </a>
@@ -240,7 +257,7 @@
                                 <div class="card border" id="card-subs">
                                     <div class="card-body text-center">
                                         <h5 class="card-title">Premium</h5>
-                                        <p class="card-text">₱12,000/Year</p>
+                                        <p class="card-text">₱500/Year</p>
                                         <a class="btn btn-primary" href="/subscription/1_year">
                                             Get
                                         </a>

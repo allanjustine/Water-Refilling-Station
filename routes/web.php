@@ -13,8 +13,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GcashController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderStatusController;
-
-
+use App\Http\Controllers\RatingController;
 
 //////////////////////////////////////////////////////////////////////////
 Route::get('/closed', [UserProfileController::class, 'closed']);
@@ -52,7 +51,10 @@ Auth::routes();
 // Customer Users Routes List
 Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/products/feedbacks/{id}', [CustomerController::class, 'feedbacks']);
     Route::get('/customer/home', [HomeController::class, 'customerHome'])->name('customer.home');
+
+    Route::post('/submit-rating/{id}', [RatingController::class, 'submitRating']);
 
     // Customer Profile
     route::get('/customer/profile', [UserProfileController::class, 'userProfile'])->name('customer.profile');

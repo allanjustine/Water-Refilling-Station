@@ -42,15 +42,11 @@ class TimeBasedRoutingMiddleware
             return $next($request);
         }
 
-        $hour = now()->hour;
-
-        if ($hour >= 18 || $hour < 8) {
-            return $next($request);
-        }
-
         if ($request->is('closed')) {
             return $next($request);
         }
         return redirect('/closed');
+
+
     }
 }

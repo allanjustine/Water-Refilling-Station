@@ -31,6 +31,11 @@ class Product extends Model
         return $this->belongsTo(User::class); // 'withDefault' makes sure a default User instance is created if the relationship is null.
     }
 
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
 
     protected static function boot()
     {
