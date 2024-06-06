@@ -64,7 +64,7 @@
         <div class="col-md-8 mt-5">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="text-center">My Invoices</h3>
+                    <h3 class="text-center">STATEMENT OF BILLINGS</h3>
                 </div>
                 <div class="card-body">
 
@@ -75,7 +75,7 @@
                                 <th>Invoice Date</th>
                                 <th>Due Date</th>
                                 <th>Total</th>
-                                <th>Discount</th>
+                                {{-- <th>Discount</th> --}}
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -88,7 +88,7 @@
                                 </td>
                                 <td>₱{{ number_format($invoice->invoice_total - ($invoice->invoice_total * $invoice->invoice_discount) / 100, 2) }}
                                 </td>
-                                <td>{{ $invoice->invoice_discount }}%</td>
+                                {{-- <td>{{ $invoice->invoice_discount }}%</td> --}}
                                 <td><span class="{{ $invoice->status == 'Paid' ? 'text-success' : 'text-danger' }} px-3 py-2 border">{{ $invoice->status }}</span>
                                 </td>
                             </tr>

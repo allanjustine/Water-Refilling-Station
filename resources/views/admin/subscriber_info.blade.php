@@ -18,7 +18,7 @@
                                 <th>Invoice Date</th>
                                 <th>Due Date</th>
                                 <th>Total</th>
-                                <th>Discount</th>
+                                {{-- <th>Discount</th> --}}
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -32,7 +32,7 @@
                                     </td>
                                     <td>₱{{ number_format($invoice->invoice_total - ($invoice->invoice_total * $invoice->invoice_discount) / 100, 2) }}
                                     </td>
-                                    <td>{{ $invoice->invoice_discount }}%</td>
+                                    {{-- <td>{{ $invoice->invoice_discount }}%</td> --}}
                                     <td><span class="{{ $invoice->status == 'Paid' ? 'text-success' : 'text-danger' }} px-3 py-2 border"><b>{{ $invoice->status }}</b></span></td>
                                     <td><a href="#" data-bs-toggle="modal"
                                             data-bs-target="#invoice{{ $invoice->id }}">Update</a></td>

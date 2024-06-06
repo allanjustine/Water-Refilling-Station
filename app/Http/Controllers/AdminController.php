@@ -131,6 +131,19 @@ class AdminController extends Controller
                 'created_at'    =>  now(),
                 'billings'       =>      $request->billings
             ]);
+
+            $invoiceNo = mt_rand(1000, 9999);
+
+            $invoiceDate = $request->billings == 200 ? now()->addMonth() : now()->addYear();
+
+            Invoice::create([
+                'invoice_no'                  =>          $invoiceNo,
+                'invoice_due_date'            =>          $invoiceDate,
+                'invoice_total'               =>          $request->billings,
+                'invoice_discount'            =>          $request->invoice_discount,
+                'status'                      =>          "Unpaid",
+                'user_id'                     =>          $user->id,
+            ]);
             $user->created_at = now();
             $user->save();
         }
@@ -254,14 +267,37 @@ class AdminController extends Controller
                 $basic  = new \Vonage\Client\Credentials\Basic("7500220b", "H499iNJ3mMAZYHI4");
                 $client = new \Vonage\Client($basic);
 
+                // $sid = getenv("TWILIO_SID");
+                // $token = getenv("TWILIO_TOKEN");
+                // $owner = getenv("TWILIO_PHONE");
+                // $twilio = new Client($sid, $token);
+
                 if ($request->payment_method == 'Cash on Delivery') {
                     $client->sms()->send(
                         new \Vonage\SMS\Message\SMS($order->user->phone, 'BRAND_NAME', 'Reminders! Hello Mr/Mrs. ' . $order->user->name . ' your order is out for delivery. We will deliver your orders at ' . $order->user->address . ', ' . $order->user->municipality . ' Please prepare an exact amount P' . ($order->order_quantity + $order->own) * $order->product->price . ' for your orders Cash on Delivery. Thank You!')
                     );
+                    // $texta = $twilio->messages
+                    // ->create(
+                    //     $order->user->phone,
+                    //     [
+                    //         "body" => 'Reminders! Hello Mr/Mrs. ' . $order->user->name . ' your order is out for delivery. We will deliver your orders at ' . $order->user->address . ', ' . $order->user->municipality . ' Please prepare an exact amount P' . ($order->order_quantity + $order->own) * $order->product->price . ' for your orders Cash on Delivery. Thank You!',
+                    //         "from" => $owner
+                    //     ]
+                    // );
+
                 } else {
                     $client->sms()->send(
                         new \Vonage\SMS\Message\SMS($order->user->phone, 'BRAND_NAME', 'Reminders! Hello Mr/Mrs. ' . $order->user->name . ' your order is out for delivery. We will deliver your orders at ' . $order->user->address . ', ' . $order->user->municipality . ' and Thank you for using gcash as payment method. Your reference # ' . $order->reference_number . '. Thank you for your orders!')
                     );
+
+                    // $twilio->messages
+                    // ->create(
+                    //     $order->user->phone,
+                    //     [
+                    //         "body" => 'Reminders! Hello Mr/Mrs. ' . $order->user->name . ' your order is out for delivery. We will deliver your orders at ' . $order->user->address . ', ' . $order->user->municipality . ' and Thank you for using gcash as payment method. Your reference # ' . $order->reference_number . '. Thank you for your orders!',
+                    //         "from" => $owner
+                    //     ]
+                    // );
                 }
             }
 

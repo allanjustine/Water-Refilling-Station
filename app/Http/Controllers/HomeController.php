@@ -128,7 +128,7 @@ class HomeController extends Controller
     {
         $user = User::find($id);
 
-        $subscriberInvoices = Invoice::where('user_id', $user->id)->get();
+        $subscriberInvoices = Invoice::where('user_id', $user->id)->whereBetween('invoice_due_date', [now(), now()->addDays(7)])->get();
 
         return view('admin.subscriber_info', compact('subscriberInvoices', 'user'));
     }
@@ -149,7 +149,7 @@ class HomeController extends Controller
     {
         $user = auth()->user();
 
-        $invoices = Invoice::where('user_id', $user->id)->get();
+        $invoices = Invoice::where('user_id', $user->id)->whereBetween('invoice_due_date', [now(), now()->addDays(7)])->get();
 
         $daysUntilExpiration1Month = now()->diffInDays($user->created_at->addMonth());
         $daysUntilExpiration1Year = now()->diffInDays($user->created_at->addYear());

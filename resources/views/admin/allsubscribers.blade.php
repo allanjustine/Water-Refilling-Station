@@ -100,9 +100,9 @@
                                                 data-bs-target="#disable{{ $data['user']->id }}">Disable</a>
 
                                             <div class="d-flex">
-                                                <a href="#" data-bs-toggle="modal"
+                                                {{-- <a href="#" data-bs-toggle="modal"
                                                     data-bs-target="#invoice{{ $data['user']->id }}"
-                                                    class="btn btn-warning text-white">Create Invoice</a>
+                                                    class="btn btn-warning text-white">Create Invoice</a> --}}
                                                 <a href="/admin/subscriber/invoice/{{ $data['user']->id }}"
                                                     class="btn btn-info text-white">Update Invoice</a>
                                             </div>

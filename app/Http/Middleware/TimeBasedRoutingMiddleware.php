@@ -31,21 +31,23 @@ class TimeBasedRoutingMiddleware
         //     return $next($request);
         // }
 
-        $timezone = 'Asia/Manila';
+        // $timezone = 'Asia/Manila';
 
-        $now = Carbon::now($timezone);
+        // $now = Carbon::now($timezone);
 
-        $open = 8;
-        $close = 18;
+        // $open = 8;
+        // $close = 18;
 
-        if ($now->hour >= $open && $now->hour < $close) {
-            return $next($request);
-        }
+        // if ($now->hour >= $open && $now->hour < $close) {
+        //     return $next($request);
+        // }
 
-        if ($request->is('closed')) {
-            return $next($request);
-        }
-        return redirect('/closed');
+        // if ($request->is('closed')) {
+        //     return $next($request);
+        // }
+        // return redirect('/closed');
+
+        return $next($request);
 
 
     }
