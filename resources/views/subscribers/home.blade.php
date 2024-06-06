@@ -27,7 +27,8 @@
                     @else
                     <div class="panel-heading">
                         Welcome,
-                        <a class="user-name" href="{{ route('subscribers.profile') }}">
+                        <!-- href="{{ route('subscribers.profile') }}" -->
+                        <a class="user-name">
                             <b>{{ auth()->user()->name }}</b>
                         </a>
                         Your subscription is valid for <u><b>{{ auth()->user()->subscription_type }} </b></u>- Avail
@@ -71,16 +72,16 @@
                     <table class="table table-striped table-hovered">
                         <thead>
                             <tr>
-                                <th>Invoice #</th>
-                                <th>Invoice Date</th>
-                                <th>Due Date</th>
+                                <th>Billing #</th>
+                                <th>Billing Date</th>
+                                <th>Billing Due Date</th>
                                 <th>Total</th>
-                                {{-- <th>Discount</th> --}}
+                                <!-- <th>Discount</th> -->
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($invoices as $invoice)
+                            @foreach ($invoices as $invoice)
                             <tr>
                                 <td>{{ $invoice->invoice_no }}</td>
                                 <td>{{ optional($invoice->created_at)->format('F d, Y') }}</td>
@@ -88,8 +89,21 @@
                                 </td>
                                 <td>₱{{ number_format($invoice->invoice_total - ($invoice->invoice_total * $invoice->invoice_discount) / 100, 2) }}
                                 </td>
-                                {{-- <td>{{ $invoice->invoice_discount }}%</td> --}}
+                                <!-- <td>{{ $invoice->invoice_discount }}%</td> -->
                                 <td><span class="{{ $invoice->status == 'Paid' ? 'text-success' : 'text-danger' }} px-3 py-2 border">{{ $invoice->status }}</span>
+                                </td>
+                            </tr>
+                            @endforeach
+                            @forelse ($invoicesPaid as $paid)
+                            <tr>
+                                <td>{{ $paid->invoice_no }}</td>
+                                <td>{{ optional($paid->created_at)->format('F d, Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($paid->invoice_due_date)->format('F d, Y') }}
+                                </td>
+                                <td>₱{{ number_format($paid->invoice_total - ($paid->invoice_total * $paid->invoice_discount) / 100, 2) }}
+                                </td>
+                                <!-- <td>{{ $paid->invoice_discount }}%</td> -->
+                                <td><span class="{{ $paid->status == 'Paid' ? 'text-success' : 'text-danger' }} px-3 py-2 border">{{ $paid->status }}</span>
                                 </td>
                             </tr>
                             @empty

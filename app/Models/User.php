@@ -116,5 +116,9 @@ class User extends Authenticatable
     {
         return $this->ratings()->where('order_id', $orderId)->exists();
     }
+    public function hasInvoice($invoiceId)
+    {
+        return $this->invoices()->where('user_id', $invoiceId)->exists();
+    }
 
 }

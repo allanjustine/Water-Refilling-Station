@@ -44,7 +44,7 @@
         <div class="card">
             <div class="card-header">
                 <h2 class="text-center" style="text-transform: uppercase;">
-                    <a href="/products" class="btn btn-secondary">Back</a> Users Feedbacks in this Product <strong>{{ $products->name }}</strong>
+                    <!-- <a href="/products" class="btn btn-secondary">Back--></a> Users Feedbacks in this Product <strong>{{ $products->name }}</strong>
                 </h2>
             </div>
 

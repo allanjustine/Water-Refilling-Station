@@ -152,7 +152,7 @@
                                     Dashboard</b></a>
                             @elseif(Auth::user()->type == 'user')
                             <!-- Redirect other users to the customer home -->
-                            <a href="{{ route('dashboard') }}" class="dropdown-item"><b>Customer
+                            <a href="{{ route('customer.home') }}" class="dropdown-item"><b>Customer
                                     Dashboard</b></a>
                             @else
                             <a href="#" class="dropdown-item"><b>Sorry Waiting for Approval</b></a>

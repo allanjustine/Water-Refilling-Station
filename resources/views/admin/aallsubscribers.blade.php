@@ -68,6 +68,10 @@
                                     <td><span class="text-danger">
                                             @if ($data['expirationRemaining'] > 0 && $data['user']->type == 'WRF')
                                                 {{ $data['expirationRemaining'] . ' day(s) remaining' }}
+                                            @elseif($data['user']->type == 'Not Approve')
+                                                Waiting for approval...
+                                            @elseif($data['user']->type == 'Disabled')
+                                                This subscriber's account is disabled...
                                             @else
                                                 The subscription of this subscriber has already been consumed.
                                                 @if ($data['user']->type == 'WRF')
@@ -94,30 +98,31 @@
                                     @if ($data['user']->type == 'WRF')
                                         <td>
                                             <!---<a href="{{ url('delete', $data['user']->id) }}">Delete</a>---->
-                                            <a href="{{ route('users.edit', $data['user']->id) }}">Update</a>
+                                            <!-- <a href="{{ route('users.edit', $data['user']->id) }}">Update</a> -->
 
-                                            <a href="#" data-bs-toggle="modal"
-                                                data-bs-target="#disable{{ $data['user']->id }}">Disable</a>
+                                            {{-- <a href="#" data-bs-toggle="modal" class="btn btn-danger"
+                                                data-bs-target="#disable{{ $data['user']->id }}">Disable</a> --}}
 
                                             <div class="d-flex">
                                                 {{-- <a href="#" data-bs-toggle="modal"
                                                     data-bs-target="#invoice{{ $data['user']->id }}"
                                                     class="btn btn-warning text-white">Create Invoice</a> --}}
                                                 <a href="/admin/subscriber/invoice/{{ $data['user']->id }}"
-                                                    class="btn btn-info text-white">Update Invoice</a>
+                                                    class="btn btn-info text-white" {{ !$data['user']->hasInvoice($data['user']->id) ? 'hidden' : '' }}>Settle Payment</a>
+
                                             </div>
                                         </td>
                                     @elseif ($data['user']->type == 'Disabled')
                                         <td>
                                             <a href="#" data-bs-toggle="modal"
-                                                data-bs-target="#enable{{ $data['user']->id }}">Enable</a>
+                                                data-bs-target="#enable{{ $data['user']->id }}" class="btn btn-primary">Enable</a>
                                         </td>
                                     @else
                                         <td>
                                             <a href="#" data-bs-toggle="modal"
-                                                data-bs-target="#decline{{ $data['user']->id }}">Decline</a>
+                                                data-bs-target="#decline{{ $data['user']->id }}" class="btn btn-danger">Decline</a>
                                             <a href="#" data-bs-toggle="modal"
-                                                data-bs-target="#approve{{ $data['user']->id }}">Approve</a>
+                                                data-bs-target="#approve{{ $data['user']->id }}" class="btn btn-info text-white">Approve</a>
                                         </td>
                                     @endif
                                 </tr>

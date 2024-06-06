@@ -168,7 +168,7 @@
                         @if (session('disableError'))
                         <div style="font-size: 14px;" class="text-danger">
                             <strong>{{ session('disableError') }}</strong>
-                            <a href="/subscription/renewal">Renew</a>
+                            <a href="/subscription/renewal" class="btn btn-info text-white">Renew</a>
                         </div>
                         @endif
                     </div>

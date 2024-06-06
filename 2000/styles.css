@@ -1,0 +1,163 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header Styles */
+header {
+  background-color: #000;
+  padding: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  height: 10px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+}
+
+nav ul li {
+  margin-right: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+/* Hero Section Styles */
+.hero {
+  background-image: url('ultra.jpg'); /* Replace 'ultra.jpg' with the path to your background image */
+  background-size: cover;
+  background-position: center;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+}
+
+.hero-content {
+  max-width: 600px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.hero button {
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  background-color: #e50914;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.hero button:hover {
+  background-color: #ff0000;
+}
+
+/* Subscription Section Styles */
+.subscription {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.subscription h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.plans {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* Allow flex items to wrap to next line */
+}
+
+.plan {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 0 10px;
+  max-width: 300px;
+  flex: 1; /* Make each plan take equal width */
+  margin-bottom: 20px;
+}
+
+.plan h3 {
+  font-size: 1.5rem;
+}
+
+.plan p {
+  margin-bottom: 20px;
+}
+
+.plan button {
+  padding: 10px 20px;
+  background-color: #e50914;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.plan button:hover {
+  background-color: #ff0000;
+}
+
+/* Footer Styles */
+footer {
+  background-color: #000;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  /* Adjust styles for screens smaller than 768px (e.g., tablets and cellphones) */
+  .hero {
+    height: 60vh;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .hero button {
+    padding: 8px 16px;
+    font-size: 1rem;
+  }
+
+  .plans {
+    flex-direction: column; /* Stack plans vertically on smaller screens */
+  }
+
+  .plan {
+    margin: 0 auto;
+    width: 80%; /* Make plans take full width on smaller screens */
+  }
+}
+

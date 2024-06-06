@@ -82,7 +82,7 @@ class HomeController extends Controller
                 'expirationRemaining' => $expirationRemaining,
             ];
         }
-        return view('admin.allsubscribers', compact('subscriberData'));
+        return view('admin.aallsubscribers', compact('subscriberData'));
     }
 
 
@@ -128,9 +128,10 @@ class HomeController extends Controller
     {
         $user = User::find($id);
 
-        $subscriberInvoices = Invoice::where('user_id', $user->id)->whereBetween('invoice_due_date', [now(), now()->addDays(7)])->get();
+        $subscriberInvoices = Invoice::where('user_id', $user->id)->where('status', '!=', 'Paid')->whereBetween('invoice_due_date', [now(), now()->addDays(7)])->get();
+        $invoicesPaid = Invoice::where('user_id', $user->id)->where('status', 'Paid')->get();
 
-        return view('admin.subscriber_info', compact('subscriberInvoices', 'user'));
+        return view('admin.subscriber_info', compact('subscriberInvoices', 'invoicesPaid', 'user'));
     }
 
     public function subscriberPaid(Request $request, $id)
@@ -142,6 +143,30 @@ class HomeController extends Controller
             'status'                =>          $request->status
         ]);
 
+        if ($request->status == 'Paid') {
+            $invoiceNo = mt_rand(1000, 9999);
+
+            // if ang billings kay 200 sa pag request month ra ang due date gekan sa pag approve else dile 200 mahimong year.
+            $invoiceDate = $request->billings == 200 ? now()->addMonth() : now()->addYear();
+
+            // ma create ang invoice sa user nga ge accept
+            Invoice::create([
+                'invoice_no'                  =>          $invoiceNo,
+                'invoice_due_date'            =>          $invoiceDate,
+                'invoice_total'               =>          $request->billings,
+                'invoice_discount'            =>          $request->invoice_discount,
+                'status'                      =>          "Unpaid",
+                'user_id'                     =>          $invoice->user->id,
+            ]);
+
+
+            $invoice->user->update([
+                'created_at' => now(),
+            ]);
+            $invoice->user->created_at = now();
+            $invoice->user->save();
+        }
+
         return back()->with('invoice', $invoice->user->name . ' Updated Successfully');
     }
 
@@ -149,7 +174,8 @@ class HomeController extends Controller
     {
         $user = auth()->user();
 
-        $invoices = Invoice::where('user_id', $user->id)->whereBetween('invoice_due_date', [now(), now()->addDays(7)])->get();
+        $invoices = Invoice::where('user_id', $user->id)->where('status', '!=', 'Paid')->whereBetween('invoice_due_date', [now(), now()->addDays(7)])->get();
+        $invoicesPaid = Invoice::where('user_id', $user->id)->where('status', 'Paid')->get();
 
         $daysUntilExpiration1Month = now()->diffInDays($user->created_at->addMonth());
         $daysUntilExpiration1Year = now()->diffInDays($user->created_at->addYear());
@@ -194,12 +220,12 @@ class HomeController extends Controller
 
         $dailyReports = Order::where('status', 'Paid')
 
-        ->whereIn('product_id', $user->products->pluck('id'))
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->whereIn('product_id', $user->products->pluck('id'))
+            ->orderBy('created_at', 'desc')
+            ->get();
 
 
-        return view('subscribers.home', compact('user', 'daysUntilExpiration1Month', 'daysUntilExpiration1Year', 'borrow', 'sold', 'totalSales', 'todaySales', 'monthlySales', 'invoices', 'dailyReports'));
+        return view('subscribers.home', compact('user', 'daysUntilExpiration1Month','invoicesPaid',  'daysUntilExpiration1Year', 'borrow', 'sold', 'totalSales', 'todaySales', 'monthlySales', 'invoices', 'dailyReports'));
     }
 
     /** Delete */

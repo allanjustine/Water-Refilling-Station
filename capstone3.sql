@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 31, 2024 at 04:57 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Jun 06, 2024 at 11:04 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `capstone2`
+-- Database: `capstone3`
 --
 
 -- --------------------------------------------------------
@@ -31,11 +31,21 @@ CREATE TABLE `carts` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `product_id` bigint(20) UNSIGNED NOT NULL,
+  `borrow` varchar(255) DEFAULT NULL,
+  `own` varchar(255) DEFAULT NULL,
+  `buy` varchar(255) DEFAULT NULL,
   `quantity` int(10) UNSIGNED NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`id`, `user_id`, `product_id`, `borrow`, `own`, `buy`, `quantity`, `created_at`, `updated_at`, `image`) VALUES
+(8, 10, 8, '0', '3', '0', 0, '2024-06-06 02:31:21', '2024-06-06 02:31:21', NULL);
 
 -- --------------------------------------------------------
 
@@ -50,18 +60,6 @@ CREATE TABLE `ch_favorites` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `ch_favorites`
---
-
-INSERT INTO `ch_favorites` (`id`, `user_id`, `favorite_id`, `created_at`, `updated_at`) VALUES
-('3ee82b2a-ddd0-4ccd-907c-b7ce46f77f8e', 7, 3, '2024-01-29 03:02:34', '2024-01-29 03:02:34'),
-('6b6f517d-4860-4b60-872a-7268200a3da6', 7, 6, '2024-01-29 03:05:43', '2024-01-29 03:05:43'),
-('71cbad33-f527-47d7-aae4-a81e6622d4ca', 7, 5, '2024-01-29 03:02:47', '2024-01-29 03:02:47'),
-('8a66ffd4-eda9-4e62-bdea-768d96a5a9ce', 7, 4, '2024-01-29 03:05:33', '2024-01-29 03:05:33'),
-('e368b5c3-7889-4800-b777-e788906c1c44', 7, 1, '2024-01-29 03:02:11', '2024-01-29 03:02:11'),
-('e715de47-6fd5-4a80-82e1-d4abc076ee53', 7, 2, '2024-01-29 03:02:26', '2024-01-29 03:02:26');
 
 -- --------------------------------------------------------
 
@@ -80,34 +78,6 @@ CREATE TABLE `ch_messages` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `ch_messages`
---
-
-INSERT INTO `ch_messages` (`id`, `from_id`, `to_id`, `body`, `attachment`, `seen`, `created_at`, `updated_at`) VALUES
-('00fca9c6-6f72-4952-9579-36449017aebb', 1, 7, 'wala jud hahaha sa akoa kay naa lage', NULL, 1, '2024-01-29 03:18:18', '2024-01-29 02:44:36'),
-('0ed541a6-576f-41b1-b986-a729f9b49a91', 2, 7, 'sheshh', NULL, 1, '2024-01-30 06:59:18', '2024-01-30 06:59:20'),
-('2102e096-2bc3-473b-ad6b-69543fcd3e19', 1, 7, 'basin pud4', NULL, 1, '2024-01-29 03:18:40', '2024-01-29 02:44:36'),
-('2fe58146-3158-4e47-b634-5ad40b129dd1', 7, 2, 'order ko boss 2 ka book', NULL, 1, '2024-01-29 02:44:58', '2024-01-30 06:57:57'),
-('335d0b6e-1d7d-48cc-8e76-f800e54d5da1', 1, 7, '', '{\"new_name\":\"528b3b8f-68ae-4b27-8804-523f31f8fdba.jpg\",\"old_name\":\"5-gallon-bottle.jpg\"}', 1, '2024-01-28 05:50:54', '2024-01-28 05:50:59'),
-('3c5b8306-ff06-4e0b-a72f-736151ee2d70', 7, 2, 'halo habibi', NULL, 1, '2024-01-30 06:58:59', '2024-01-30 06:59:01'),
-('41a55abd-3049-4e3f-8095-887ef1f95f3d', 2, 7, 'saho haim', NULL, 1, '2024-01-30 06:59:47', '2024-01-30 06:59:49'),
-('433d2705-9678-4b44-aaed-6f4f818493cc', 1, 7, 'asdasd', NULL, 1, '2024-01-29 03:12:01', '2024-01-29 03:14:13'),
-('51e94de3-b767-47cb-9e11-e6c778c0e6a8', 7, 1, 'test1', NULL, 1, '2024-01-28 05:41:09', '2024-01-28 05:41:10'),
-('5bf252fd-8aee-4f12-8d4b-444391748d75', 3, 1, 'a', NULL, 0, '2024-01-29 03:17:56', '2024-01-29 03:17:56'),
-('70ffcd41-f62f-4309-8411-a138a835acaf', 7, 2, 'roygwaps', NULL, 1, '2024-01-30 06:59:14', '2024-01-30 06:59:16'),
-('7376ebf9-d126-463c-9243-d4c099452f64', 7, 1, 'test', NULL, 1, '2024-01-29 03:06:43', '2024-01-29 03:07:51'),
-('89094f2e-b347-42c8-b00a-5a37e7af3026', 1, 7, 'test', NULL, 1, '2024-01-29 03:08:23', '2024-01-29 03:08:28'),
-('8955e4bd-6153-453b-8a13-8326e81ed266', 14, 13, 'papalita ko og lima ka jug', NULL, 1, '2024-02-28 02:29:07', '2024-02-28 02:29:48'),
-('968c68a2-0a5b-45da-8f5f-b4dcb654a087', 2, 7, 'giatayy', NULL, 1, '2024-01-30 06:59:06', '2024-01-30 06:59:08'),
-('9bec99bd-315d-4ed8-9290-17d845a1793a', 3, 1, 'a', NULL, 0, '2024-01-29 03:17:46', '2024-01-29 03:17:46'),
-('a2ed5b70-4374-4508-ade6-7e600ef140bd', 1, 7, 'asasas', NULL, 1, '2024-01-29 03:13:35', '2024-01-29 03:14:13'),
-('a81453a0-a2a4-48da-b6d8-c5ea99567b92', 2, 7, 'testingggggggggggggggg', NULL, 1, '2024-01-30 06:58:27', '2024-01-30 06:58:52'),
-('abf41dec-9e4e-4bc0-bc0f-23012cb966df', 7, 1, 'Test', NULL, 1, '2024-01-29 03:15:35', '2024-01-29 03:16:25'),
-('c6af307f-d7f8-47e8-908a-e98e5cc34e73', 7, 1, 'testttttttttt', NULL, 1, '2024-01-29 03:56:52', '2024-02-28 02:27:04'),
-('ce4b9552-91a4-4022-85ff-6e236983ac92', 7, 2, 'pa order ak ma lima', NULL, 1, '2024-01-30 06:59:33', '2024-01-30 06:59:37'),
-('f04f96ae-a7bf-4cf5-976b-d4eee8359540', 1, 7, 'test', NULL, 1, '2024-01-29 03:16:27', '2024-01-29 02:44:36');
-
 -- --------------------------------------------------------
 
 --
@@ -123,6 +93,28 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gcash_details`
+--
+
+CREATE TABLE `gcash_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `account_name` varchar(255) NOT NULL,
+  `account_number` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `gcash_details`
+--
+
+INSERT INTO `gcash_details` (`id`, `user_id`, `account_name`, `account_number`, `created_at`, `updated_at`) VALUES
+(1, 7, 'Lyn Salamanca', '09925706696', '2024-06-06 02:35:33', '2024-06-06 02:35:33');
 
 -- --------------------------------------------------------
 
@@ -147,7 +139,7 @@ CREATE TABLE `invoices` (
 --
 
 INSERT INTO `invoices` (`id`, `invoice_no`, `invoice_due_date`, `invoice_total`, `invoice_discount`, `status`, `user_id`, `created_at`, `updated_at`) VALUES
-(2, '2', '2024-01-29', '1000', '5', 'Unpaid', 2, '2024-01-29 04:06:47', '2024-01-29 04:06:47');
+(6, '8633', '2024-07-06 15:51:27', '200', NULL, 'Unpaid', 8, '2024-06-06 07:51:27', '2024-06-06 07:51:27');
 
 -- --------------------------------------------------------
 
@@ -173,7 +165,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (6, '2023_12_16_131122_create_products_table', 1),
 (7, '2023_12_16_131123_create_carts_table', 1),
-(8, '2023_12_16_131123_create_orders_table', 1),
+(8, '2023_12_16_131124_create_orders_table', 1),
 (9, '2023_12_20_034613_add_approved_to_orders_table', 1),
 (10, '2023_12_29_170553_create_order_product_table', 1),
 (11, '2024_01_16_125536_add_phone_to_users', 1),
@@ -184,7 +176,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (16, '2024_01_24_999999_add_dark_mode_to_users', 1),
 (17, '2024_01_24_999999_add_messenger_color_to_users', 1),
 (18, '2024_01_24_999999_create_chatify_favorites_table', 1),
-(19, '2024_01_24_999999_create_chatify_messages_table', 1);
+(19, '2024_01_24_999999_create_chatify_messages_table', 1),
+(20, '2024_05_28_015815_create_gcash_details_table', 1),
+(21, '2024_06_05_101800_create_ratings_table', 1),
+(22, '2024_06_06_121811_create_notifications_table', 2);
 
 -- --------------------------------------------------------
 
@@ -197,10 +192,14 @@ CREATE TABLE `orders` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `product_id` bigint(20) UNSIGNED NOT NULL,
   `order_quantity` int(11) NOT NULL DEFAULT 1,
-  `status` enum('Pending','On Process','For Delivery','Delivered','Paid') NOT NULL DEFAULT 'Pending',
+  `status` enum('Pending','On Process','For Delivery','Delivered','Paid','Cancelled') NOT NULL DEFAULT 'Pending',
   `image` varchar(255) DEFAULT NULL,
-  `jug_status` varchar(255) DEFAULT NULL,
+  `borrow` varchar(255) DEFAULT NULL,
+  `own` varchar(255) DEFAULT NULL,
+  `buy` varchar(255) DEFAULT NULL,
   `payment_method` varchar(255) DEFAULT NULL,
+  `reference_number` varchar(255) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `product_status` varchar(255) NOT NULL DEFAULT 'Approve',
@@ -211,12 +210,14 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `product_id`, `order_quantity`, `status`, `image`, `jug_status`, `payment_method`, `created_at`, `updated_at`, `product_status`, `approved`) VALUES
-(2, 7, 1, 1, 'Paid', NULL, 'Sold', 'Gcash', '2024-01-29 06:55:54', '2024-01-29 06:55:54', 'Approve', 0),
-(3, 14, 11, 10, 'Paid', NULL, 'Sold', 'Cash on Delivery', '2024-01-30 06:07:45', '2024-01-30 06:07:45', 'Approve', 0),
-(4, 14, 11, 5, 'Paid', NULL, 'Sold', 'Cash on Delivery', '2024-01-30 06:15:11', '2024-01-30 06:15:11', 'Approve', 0),
-(5, 14, 11, 15, 'Paid', NULL, 'Borrow', 'Cash on Delivery', '2024-01-30 06:20:21', '2024-01-30 06:20:21', 'Approve', 0),
-(6, 7, 1, 2, 'Paid', NULL, 'Sold', 'Cash on Delivery', '2024-01-30 06:56:53', '2024-01-30 06:56:53', 'Approve', 0);
+INSERT INTO `orders` (`id`, `user_id`, `product_id`, `order_quantity`, `status`, `image`, `borrow`, `own`, `buy`, `payment_method`, `reference_number`, `reason`, `created_at`, `updated_at`, `product_status`, `approved`) VALUES
+(1, 3, 4, 0, 'Paid', NULL, '0', '2', '0', 'Cash on Delivery', NULL, NULL, '2024-06-05 22:36:30', '2024-06-05 22:36:30', 'Approve', 0),
+(2, 3, 3, 0, 'Paid', NULL, '0', '1', '0', 'Cash on Delivery', NULL, NULL, '2024-06-05 22:38:20', '2024-06-05 22:38:20', 'Approve', 0),
+(3, 3, 2, 0, 'For Delivery', NULL, '0', '1', '0', 'Cash on Delivery', NULL, NULL, '2024-06-05 23:28:54', '2024-06-05 23:28:54', 'Approve', 0),
+(4, 3, 4, 0, 'For Delivery', NULL, '0', '1', '0', 'Cash on Delivery', NULL, NULL, '2024-06-05 22:50:18', '2024-06-05 22:50:18', 'Approve', 0),
+(5, 3, 4, 0, 'For Delivery', NULL, '0', '2', '0', 'Cash on Delivery', NULL, NULL, '2024-06-05 23:06:44', '2024-06-05 23:06:44', 'Approve', 0),
+(6, 10, 5, 10, 'Paid', NULL, '0', '0', '5', 'Gcash', '13143546587980909', NULL, '2024-06-06 02:39:33', '2024-09-06 05:01:36', 'Approve', 0),
+(7, 10, 6, 0, 'Paid', NULL, '0', '5', '0', 'Cash on Delivery', NULL, NULL, '2024-06-06 02:44:42', '2024-06-06 02:44:42', 'Approve', 0);
 
 -- --------------------------------------------------------
 
@@ -256,6 +257,13 @@ CREATE TABLE `password_reset_tokens` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `password_reset_tokens`
+--
+
+INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
+('sabandonemmar@gmail.com', '$2y$12$xm2uy0OOTNfNsJF9TpmTcOZ8EYMdNDIiNDH9lKublw7k4keYXWlkK', '2024-06-05 21:50:52');
+
 -- --------------------------------------------------------
 
 --
@@ -286,6 +294,7 @@ CREATE TABLE `products` (
   `name` varchar(255) NOT NULL,
   `price` decimal(8,2) NOT NULL,
   `image` varchar(255) NOT NULL,
+  `extra` decimal(8,2) NOT NULL,
   `product_quantity` int(11) NOT NULL DEFAULT 0,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -296,17 +305,41 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `price`, `image`, `product_quantity`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'Gallon round', 35.00, 'products/LaLvAtFlUgsbNUg1HgqQkbEqMAXJFENygpwvJcTj.webp', 57, 2, '2024-01-28 04:22:17', '2024-01-30 06:55:51'),
-(2, 'Slim jug w/faucet', 35.00, 'products/2QDVL05wGJvPsSdjUpkpYVL8NVfQgEqPmuuMss6K.webp', 60, 6, '2024-01-28 04:24:11', '2024-01-30 06:14:26'),
-(3, 'Nature spring distilled water 10L', 90.00, 'products/J7554j5ZH4rOeMrJdSZZQTHsxSCkyJ1h3feqBkR7.webp', 60, 3, '2024-01-28 04:27:19', '2024-01-30 06:14:26'),
-(4, 'Nature\'s Spring Purified Water 500mL', 10.00, 'products/XWZyqQatbrZD9WA3VNGDHyuWP89TZSgbFQSsy1w3.webp', 110, 5, '2024-01-28 04:29:48', '2024-01-30 06:14:26'),
-(5, 'Water Gallon', 35.00, 'products/h4iLmb2o9V5piKWEBCpfe5v5wJ7jjwKyqI7TpWFI.jpg', 60, 4, '2024-01-28 04:31:36', '2024-01-30 06:14:26'),
-(7, 'Round Gallon', 35.00, 'products/f3cihusK4mDbw8dyO6O0LOLkZh7KDX9euACpOO8u.jpg', 110, 12, '2024-01-30 04:37:21', '2024-01-30 06:14:26'),
-(8, 'Round Gallon', 35.00, 'products/DBDidmrKu4WdRwmzz1l161MqvbH0eD37muTYSXNd.jpg', 110, 13, '2024-01-30 05:44:21', '2024-01-30 06:14:26'),
-(9, 'Slim jug w/faucet', 50.00, 'products/gcyYWR3Wwgv0y6Rlk6yh28HntP3KOZDXdvMV99pR.webp', 110, 13, '2024-01-30 05:45:11', '2024-01-30 06:14:26'),
-(10, '500ML water', 20.00, 'products/aGczWJpnu7Gb7Yuzg7ArmoZUfo7chQk5hwZ80nfC.webp', 60, 13, '2024-01-30 05:47:47', '2024-01-30 06:14:26'),
-(11, 'Round Gallon', 35.00, 'products/UV2tfhpS7jXGYbFfBHxKWPfEt52GMqTUT1iw3PSw.jpg', 80, 15, '2024-01-30 06:01:36', '2024-01-30 06:17:55');
+INSERT INTO `products` (`id`, `name`, `price`, `image`, `extra`, `product_quantity`, `user_id`, `created_at`, `updated_at`) VALUES
+(2, 'Round jug', 30.00, 'products/SeXH6ht1hovkozgHaXRG3K1WPVglztEXzftRuChF.webp', 170.00, 50, 4, '2024-06-05 22:00:40', '2024-06-05 22:39:48'),
+(3, 'Round Jug', 30.00, 'products/SmXk7u8eTtZVo898coYvXHVk5fOnSPkDbnW4YWCR.webp', 170.00, 50, 2, '2024-06-05 22:09:42', '2024-06-05 22:37:33'),
+(4, 'Water Jug', 35.00, 'products/9xPFO0a210FtMSxKJ62BQJJ7o6rmdGb3afLuXDPm.webp', 170.00, 50, 2, '2024-06-05 22:11:19', '2024-06-05 23:06:39'),
+(5, 'Round Jug', 30.00, 'products/zPzRAwarLTSglqu136p8a5kTTMddg3BvFVAOHlZ3.webp', 170.00, 45, 7, '2024-06-06 02:08:40', '2024-09-06 05:01:36'),
+(6, 'Faucet jug', 30.00, 'products/hkvbKrYihypFMsb6XysILwlKYhUpUe6uapvq0fhp.webp', 200.00, 50, 7, '2024-06-06 02:09:28', '2024-06-06 02:43:21'),
+(7, 'Round jug', 30.00, 'products/Qn7CdBogbywXV6zBigLe1B9Accmfostb8wRQo2aV.webp', 170.00, 50, 6, '2024-06-06 02:12:06', '2024-06-06 02:12:06'),
+(8, 'Faucet jug', 30.00, 'products/19Q5e3P8PLJDjREywcyk46DDONDWN7neP8ANtdAm.webp', 200.00, 50, 6, '2024-06-06 02:12:30', '2024-06-06 02:12:30'),
+(9, 'Round jug', 30.00, 'products/0wqgaQnJ9d7GvfuJLmMobGBQ1sUq6yLFbpAur4jH.webp', 170.00, 50, 8, '2024-06-06 02:26:14', '2024-06-06 02:26:14'),
+(10, 'Faucet jug', 30.00, 'products/tniJpBQY1pjsnDSFj1UQX5xBHqoZyq8NK8FmCHu0.webp', 200.00, 50, 8, '2024-06-06 02:26:32', '2024-06-06 02:26:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ratings`
+--
+
+CREATE TABLE `ratings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `product_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `order_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `user_rate` int(11) DEFAULT 0,
+  `feedback` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ratings`
+--
+
+INSERT INTO `ratings` (`id`, `user_id`, `product_id`, `order_id`, `user_rate`, `feedback`, `created_at`, `updated_at`) VALUES
+(1, 3, 4, 1, 4, 'Goods', '2024-06-05 22:37:23', '2024-06-05 22:37:23'),
+(2, 3, 3, 2, 5, 'good', '2024-06-05 23:44:55', '2024-06-05 23:44:55');
 
 -- --------------------------------------------------------
 
@@ -327,7 +360,7 @@ CREATE TABLE `users` (
   `billings` decimal(10,2) DEFAULT 0.00,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `subscription_type` enum('1_month','1_year') NOT NULL DEFAULT '1_month',
+  `subscription_type` enum('infinite','1_month','1_year') NOT NULL DEFAULT '1_month',
   `phone` varchar(255) DEFAULT NULL,
   `municipality` varchar(255) DEFAULT NULL,
   `station` varchar(255) DEFAULT NULL,
@@ -341,17 +374,16 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `type`, `avatar`, `address`, `bio`, `billings`, `created_at`, `updated_at`, `subscription_type`, `phone`, `municipality`, `station`, `active_status`, `dark_mode`, `messenger_color`) VALUES
-(1, 'Administrator', 'admin@gmail.com', '2024-01-28 04:11:01', '$2y$12$vY.8WStbXFaz4kFMfmCEEu0AWh5tzqaqI2ohgvIdoYAu/9VaiPN6a', 1, 'users-avatar/W5KeKVW5srfgxXwY3tNW2adsEwktShdqW1P0fYgF.jpg', 'Brgy. Bito, Abuyog, Leyte', NULL, 0.00, '2024-01-28 04:11:01', '2024-01-29 03:21:17', '1_month', '09123451231', 'Abuyog', 'ADMIN', 0, 0, NULL),
-(2, 'Aqua', 'aqua@gmail.com', NULL, '$2y$12$CyfC/v/RVHKfcMcjbIaoZObbBiuhAPFA8SrqucZ0utxkZe/DJ63GC', 2, 'users-avatar/cqw0k2J3MigbVM8pIrRAhDf76e1x0Xp4bPXGLiMH.jpg', 'Brgy. Bito, Abuyog, Leyte', NULL, 1000.00, '2024-01-30 04:51:49', '2024-01-30 07:00:03', '1_month', '123', 'Abuyog', 'Aquapoint Water Refilling Station', 0, 0, NULL),
-(3, 'zaza', 'zaza@gmail.com', NULL, '$2y$12$tuyei0aUxEqsjNsiqYtyRe.ILjrso3SI/Yk60t99tMcFBEps1l02q', 2, NULL, 'Brgy. Batug, Javier, Leyte', NULL, 1000.00, '2024-01-28 04:20:14', '2024-01-29 03:20:12', '1_month', '123', 'Javier', 'Zaza Water Refilling Station', 1, 0, NULL),
-(4, 'gibertas', 'gibertas@gmail.com', NULL, '$2y$12$TJ3fhq.ZaEcBcZtDMawqZuJpskrJL442Lwza6aOCBf2Hehm67iZtq', 2, NULL, 'Brgy. Hilusig, Mahaplag, Leyte', NULL, 1000.00, '2024-01-28 04:20:18', '2024-01-28 04:20:18', '1_month', '123', 'Mahaplag', 'Gibertas purified water station', 0, 0, NULL),
-(5, 'mac', 'mac@gmail.com', NULL, '$2y$12$DVvJP4NLT5tLQ.T9usAaKuKTnZPiNNXsaeBkARbBTHMHIhfFAoc9.', 2, NULL, 'Brgy. Bito, Abuyog, Leyte', NULL, 1000.00, '2024-01-28 04:20:21', '2024-01-28 04:20:21', '1_month', '123', 'Macarthur', 'Mac-ice water refilling Station & Services', 0, 0, NULL),
-(6, 'jbp', 'jbp@gmail.com', NULL, '$2y$12$.zuXZ5L3GbXxhmvzMRTgneB4CA0FXsuW8yiILV8qmAtoaT.YQ9kFm', 4, NULL, 'Brgy. Bito, Abuyog, Leyte', NULL, 0.00, '2024-02-28 02:25:48', '2024-02-28 02:25:48', '1_month', '123', 'Abuyog', 'JBP Water Station - Purified Drinking Water', 0, 0, NULL),
-(7, 'Nemmar', 'nemmar@gmail.com', NULL, '$2y$12$6HufOehOqHo9GZ4QayJlheupoRezX0XA1GhpBIeUs9NR8wF2L6L6q', 0, 'users-avatar/5qBUr6u30WZtPiDM3NZalg6xHJwhCuyJ2qzU1onY.png', 'Brgy. Guintagbucan, Abuyog, Leyte', NULL, 0.00, '2024-01-28 04:18:55', '2024-01-29 02:45:30', '1_month', '09925706696', NULL, 'null', 0, 0, NULL),
-(12, 'Darwin Lacaros', 'darwin@gmail.com', NULL, '$2y$12$lh6Ip7WaDB.5Ijn2vpPnyuKNEjlA99d7XgK0RBVOptFtvx4vYHwBe', 2, NULL, 'Brgy. Balocawehay, Abuyog, Leyte', NULL, 1000.00, '2024-01-30 04:36:35', '2024-01-30 04:36:35', '1_month', '123', 'Abuyog', 'Living Water', 0, 0, NULL),
-(13, 'franco salamanca', 'franco@gmail.com', NULL, '$2y$12$KIMzqyVHyDPpf7MACtxZQeXSJFFmlku.fBA5qYrJj3QT7VtOl1cHS', 2, NULL, 'Brgy, Balocawehay, Abuyog, Leyte', NULL, 1000.00, '2024-01-30 05:42:18', '2024-02-28 02:30:42', '1_month', '09925706612', 'Abuyog', 'Franco Water Station', 1, 0, NULL),
-(14, 'Lyn Salamanca', 'lyn@gmail.cm', NULL, '$2y$12$SldxkkJVOpg03X0y6KuQxOfsuYP4ooMznsYXLQ.9CoRG58BLMpwPC', 0, NULL, 'Brgy, Balocawehay, Abuyog, Leyte', NULL, 0.00, '2024-01-30 05:49:17', '2024-02-28 02:31:05', '1_month', '9925706695', NULL, NULL, 0, 0, NULL),
-(15, 'Mark Castanas', 'castanas@gmail.com', NULL, '$2y$12$iTGxIB9P.cza9CYFCS2.YuW7RCfzx0K2F58pMN4Zlj.FHn6Fa6I3S', 2, NULL, 'Brgy. Barayong', NULL, 1000.00, '2024-01-30 06:00:50', '2024-01-30 06:00:50', '1_month', '09925706696', 'Javier', 'Maccoy Water Station', 0, 0, NULL);
+(1, 'Administrator', 'admin@gmail.com', '2024-06-05 17:27:24', '$2y$12$4iF5bioQjSyqnudh9V32YekwCz.s/44ZdghoxyG6q.WrRZxdws6y6', 1, NULL, NULL, NULL, 0.00, '2024-06-05 17:27:24', '2024-06-05 17:27:24', 'infinite', '09123451231', 'Abuyog', NULL, 0, 0, NULL),
+(2, 'George Dimiao', 'george@gmail.com', NULL, '$2y$12$..w0DDzmzr/hM8MpGsO6iOwCctIHenrRht0Mux8zvx29vEZMDGb.e', 2, 'users-avatar/users-avatar/pKdnrfIRSneuU4FotKOaeQ7bmRPQFDGGZtfKVZ9a.jpg', 'Doña Margarita Subdivision Brgy. Guintagbucan', NULL, 200.00, '2024-06-06 06:53:59', '2024-06-06 06:53:59', '1_month', '+639925706696', 'Abuyog', 'Weps Water Refilling Station', 0, 0, NULL),
+(3, 'Nemmar Campos', 'sabandonemmar@gmail.com', NULL, '$2y$12$u0u./EDAAquCRHHuVz/EUuyIwQI6JgHYYArzmUN6CvDenif19FT1K', 0, NULL, 'Brgy. Guintagbucan, Doña Margarita Subdivision', NULL, 0.00, '2024-06-05 21:00:54', '2024-06-05 21:00:54', '1_month', '+639925706696', 'Abuyog', NULL, 0, 0, NULL),
+(4, 'Rich Martini Absin', 'rich@gmail.com', NULL, '$2y$12$jHtWEvBL8dPT.ir5gebiLeBP7UAD8fRf2aEOT2CQwBbl.bEbPiyCm', 2, 'users-avatar/users-avatar/X0jPnZMxzmTLPyHZOdm0ExYQjHjbFNYz8OHlsUug.jpg', 'Brgy. Bito', NULL, 200.00, '2024-06-06 03:53:10', '2024-06-06 03:53:10', '1_month', '+639925705234', 'Abuyog', 'Aquapoint Water Refilling Station', 0, 0, NULL),
+(5, 'Michael Jackson', 'michael@gmail.com', NULL, '$2y$12$/XUmAmCtZl/HNhOh1FG66emMt6M2G3QlAIOzw53u9UF.VFUMM8jGO', 0, NULL, 'South China Sea', NULL, 0.00, '2024-06-05 23:26:27', '2024-06-05 23:27:31', '1_month', '+639759237124', 'Macarthur', NULL, 0, 0, NULL),
+(6, 'Mark Castanas', 'castanas@gmail.com', NULL, '$2y$12$J2FfLrwrcUdEJq.vCpkPLO.eGJacg2LXhVDY2AE/LvA.tRwMl6ZoS', 2, NULL, 'Brgy. Guintagbucan', NULL, 200.00, '2024-06-06 03:53:14', '2024-06-06 03:53:14', '1_month', '+639934572874', 'Abuyog', 'Castanas Water Refilling Station', 0, 0, NULL),
+(7, 'Lyn Salamanca', 'lyn@gmail.com', NULL, '$2y$12$h1BA5oTsUARa/QiZMME3kuI0PV9oNHl8p7CfTTovWPKhPpGNARkn.', 2, 'users-avatar/users-avatar/sNXdHGiGz3tfzQPreXAepLoE0lCJYReJOokA4NJr.jpg', 'Brgy. Guintagbucan', NULL, 500.00, '2024-06-06 06:56:22', '2024-06-06 06:56:22', '1_year', '+639987482374', 'Abuyog', 'Lyn Water Refilling Station', 0, 0, NULL),
+(8, 'Franco Salamanca', 'franco@gmail.com', NULL, '$2y$12$86oHAkgl27aTmPqRB/WeQOTGSwXo8Y7mY/SSHdWNoTFOTWmYLSQku', 2, NULL, 'Brgy. batug', NULL, 200.00, '2024-06-06 07:51:27', '2024-06-06 07:51:27', '1_month', '+639925705234', 'Javier', 'Franco Water Refilling Station', 0, 0, NULL),
+(9, 'Petere luis', 'petere@gmail.com', NULL, '$2y$12$oNx5q.4hBCgRr3E9iB/ul.Tux1FMj1O8jHdQ8SNTGszGTuUHTqOmC', 0, NULL, 'Brgy. picas', NULL, 0.00, '2024-06-06 02:27:29', '2024-06-06 02:27:29', '1_month', '+639925705234', 'Javier', NULL, 0, 0, NULL),
+(10, 'Balagasay', 'balagasay@gmail.com', NULL, '$2y$12$54Hmr7fyc654pxPdnwJxlOyG65uzoND4IHjTlxvpVU3wi0JYq5wgi', 0, NULL, 'Brgy. Sto. Nino', NULL, 0.00, '2024-06-06 02:28:26', '2024-06-06 02:28:26', '1_month', '+639925706696', 'Abuyog', NULL, 0, 0, NULL);
 
 --
 -- Indexes for dumped tables
@@ -383,6 +415,13 @@ ALTER TABLE `ch_messages`
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `gcash_details`
+--
+ALTER TABLE `gcash_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `gcash_details_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `invoices`
@@ -441,6 +480,15 @@ ALTER TABLE `products`
   ADD KEY `products_user_id_foreign` (`user_id`);
 
 --
+-- Indexes for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ratings_user_id_foreign` (`user_id`),
+  ADD KEY `ratings_product_id_foreign` (`product_id`),
+  ADD KEY `ratings_order_id_foreign` (`order_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -455,7 +503,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -464,22 +512,28 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `gcash_details`
+--
+ALTER TABLE `gcash_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `order_product`
@@ -497,13 +551,19 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `ratings`
+--
+ALTER TABLE `ratings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -515,6 +575,12 @@ ALTER TABLE `users`
 ALTER TABLE `carts`
   ADD CONSTRAINT `carts_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `carts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `gcash_details`
+--
+ALTER TABLE `gcash_details`
+  ADD CONSTRAINT `gcash_details_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `invoices`
@@ -541,6 +607,14 @@ ALTER TABLE `order_product`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `products_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD CONSTRAINT `ratings_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `ratings_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `ratings_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

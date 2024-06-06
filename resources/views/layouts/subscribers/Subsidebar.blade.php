@@ -104,7 +104,7 @@
 
             <li>
                 <a class="bn3637 bn38" href="{{ url('subscribers/orders/status/On Process') }}">
-                    <i class="fas fa-check-circle"></i> On Process
+                    <i class="fas fa-check-circle"></i> On Process 
                 </a>
             </li>
             <li>

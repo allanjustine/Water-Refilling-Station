@@ -15,7 +15,7 @@
         "laravel/ui": "^4.2",
         "laravel/vonage-notification-channel": "^3.3",
         "munafio/chatify": "^1.6",
-        "twilio/sdk": "^8.1",
+        "twilio/sdk": "^7.13",
         "vonage/client": "^4.0"
     },
     "require-dev": {
